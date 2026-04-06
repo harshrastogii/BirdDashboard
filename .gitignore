@@ -1,0 +1,50 @@
+# Virtual environment
+birdenv/
+venv/
+.env/
+
+# Training data (too large for GitHub — download via scripts)
+training_data/
+sample_audio/
+sample_audio_old/
+
+# Preprocessed numpy arrays (regenerate with preprocess.py)
+spectrograms/X_train.npy
+spectrograms/X_val.npy
+spectrograms/X_test.npy
+spectrograms/y_train.npy
+spectrograms/y_val.npy
+spectrograms/y_test.npy
+
+# Trained models (too large — retrain with scripts)
+models/*.keras
+models/*.tflite
+models/*.npy
+models/*.csv
+models/*.json
+
+# BirdNET analysis results (regenerated on run)
+birdnet_results2/
+birdnet_v5_results/
+birdnet_custom_results/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# macOS
+.DS_Store
+*.swp
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log

@@ -1,0 +1,159 @@
+{
+  "Azure Kingfisher": {
+    "precision": 0.96,
+    "recall": 0.96,
+    "f1-score": 0.96,
+    "support": 25.0
+  },
+  "Barking Owl": {
+    "precision": 0.9555555555555556,
+    "recall": 0.9847328244274809,
+    "f1-score": 0.9699248120300752,
+    "support": 131.0
+  },
+  "Black Kite": {
+    "precision": 0.93,
+    "recall": 0.9489795918367347,
+    "f1-score": 0.9393939393939394,
+    "support": 196.0
+  },
+  "Blue winged Kookaburra": {
+    "precision": 0.948051948051948,
+    "recall": 0.9240506329113924,
+    "f1-score": 0.9358974358974359,
+    "support": 158.0
+  },
+  "Bush Stone curlew": {
+    "precision": 0.8611111111111112,
+    "recall": 0.9207920792079208,
+    "f1-score": 0.8899521531100478,
+    "support": 101.0
+  },
+  "Channel billed Cuckoo": {
+    "precision": 0.8275862068965517,
+    "recall": 0.9,
+    "f1-score": 0.8622754491017964,
+    "support": 80.0
+  },
+  "Diamond Dove": {
+    "precision": 0.85,
+    "recall": 0.7391304347826086,
+    "f1-score": 0.7906976744186046,
+    "support": 23.0
+  },
+  "Galah": {
+    "precision": 0.9444444444444444,
+    "recall": 0.8561151079136691,
+    "f1-score": 0.8981132075471698,
+    "support": 139.0
+  },
+  "Gouldian Finch": {
+    "precision": 1.0,
+    "recall": 0.8333333333333334,
+    "f1-score": 0.9090909090909091,
+    "support": 6.0
+  },
+  "Great Bowerbird": {
+    "precision": 0.9072164948453608,
+    "recall": 0.946236559139785,
+    "f1-score": 0.9263157894736842,
+    "support": 93.0
+  },
+  "Helmeted Friarbird": {
+    "precision": 0.9136690647482014,
+    "recall": 0.927007299270073,
+    "f1-score": 0.9202898550724637,
+    "support": 137.0
+  },
+  "Hooded Parrot": {
+    "precision": 0.8181818181818182,
+    "recall": 0.9,
+    "f1-score": 0.8571428571428571,
+    "support": 10.0
+  },
+  "Laughing Kookaburra": {
+    "precision": 0.8758620689655172,
+    "recall": 0.9202898550724637,
+    "f1-score": 0.8975265017667845,
+    "support": 138.0
+  },
+  "Magpie Goose": {
+    "precision": 0.9710144927536232,
+    "recall": 0.9436619718309859,
+    "f1-score": 0.9571428571428572,
+    "support": 71.0
+  },
+  "Masked Owl": {
+    "precision": 0.9148936170212766,
+    "recall": 0.9662921348314607,
+    "f1-score": 0.9398907103825137,
+    "support": 89.0
+  },
+  "Partridge Pigeon": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 19.0
+  },
+  "Pheasant Coucal": {
+    "precision": 0.9411764705882353,
+    "recall": 0.9195402298850575,
+    "f1-score": 0.9302325581395349,
+    "support": 87.0
+  },
+  "Rainbow Bee eater": {
+    "precision": 0.8732394366197183,
+    "recall": 0.8732394366197183,
+    "f1-score": 0.8732394366197183,
+    "support": 71.0
+  },
+  "Red tailed Black Cockatoo": {
+    "precision": 0.9446640316205533,
+    "recall": 0.9409448818897638,
+    "f1-score": 0.9428007889546351,
+    "support": 254.0
+  },
+  "Sulphur crested Cockatoo": {
+    "precision": 0.9347826086956522,
+    "recall": 0.9591078066914498,
+    "f1-score": 0.9467889908256881,
+    "support": 269.0
+  },
+  "Tawny Frogmouth": {
+    "precision": 0.9090909090909091,
+    "recall": 0.9649122807017544,
+    "f1-score": 0.9361702127659575,
+    "support": 114.0
+  },
+  "Torresian Crow": {
+    "precision": 0.9552238805970149,
+    "recall": 0.8727272727272727,
+    "f1-score": 0.9121140142517815,
+    "support": 220.0
+  },
+  "Whistling Kite": {
+    "precision": 0.8571428571428571,
+    "recall": 0.875,
+    "f1-score": 0.865979381443299,
+    "support": 48.0
+  },
+  "Willie Wagtail": {
+    "precision": 0.9642857142857143,
+    "recall": 0.9278350515463918,
+    "f1-score": 0.9457092819614711,
+    "support": 291.0
+  },
+  "accuracy": 0.9267148014440433,
+  "macro avg": {
+    "precision": 0.9190496971340026,
+    "recall": 0.9168303660258048,
+    "f1-score": 0.916945367355551,
+    "support": 2770.0
+  },
+  "weighted avg": {
+    "precision": 0.9278116168562912,
+    "recall": 0.9267148014440433,
+    "f1-score": 0.9266816026261198,
+    "support": 2770.0
+  }
+}
