@@ -439,7 +439,7 @@ if nt_model is not None and nt_results is not None and len(nt_results) > 0:
             yaxis=dict(autorange="reversed"),
             xaxis=dict(range=[0, 1])
         )
-        st.plotly_chart(fig_top5, use_container_width=True)
+        st.plotly_chart(fig_top5, width="stretch")
 
     # --- Confidence comparison across segments ---
     st.markdown("##### Confidence comparison across segments")
@@ -463,7 +463,7 @@ if nt_model is not None and nt_results is not None and len(nt_results) > 0:
                 yaxis=dict(range=[0, 1]),
                 legend=dict(orientation="h", yanchor="bottom", y=-0.4, font=dict(size=10))
             )
-            st.plotly_chart(fig_nt_conf, use_container_width=True)
+            st.plotly_chart(fig_nt_conf, width="stretch")
 
     with col_bnline:
         st.caption("BirdNET — detections per segment")
@@ -483,7 +483,7 @@ if nt_model is not None and nt_results is not None and len(nt_results) > 0:
                 yaxis=dict(range=[0, 1]),
                 legend=dict(orientation="h", yanchor="bottom", y=-0.4, font=dict(size=10))
             )
-            st.plotly_chart(fig_bn_conf, use_container_width=True)
+            st.plotly_chart(fig_bn_conf, width="stretch")
         else:
             st.info("No BirdNET detections above threshold")
 
@@ -492,7 +492,7 @@ if nt_model is not None and nt_results is not None and len(nt_results) > 0:
     if len(nt_top1_filtered) > 0:
         nt_display = nt_top1_filtered[["Start (s)", "End (s)", "Species", "Confidence"]].copy()
         nt_display["Confidence"] = nt_display["Confidence"].apply(lambda x: f"{x:.1%}")
-        st.dataframe(nt_display, use_container_width=True, hide_index=True, height=300)
+        st.dataframe(nt_display, width="stretch", hide_index=True, height=300)
     else:
         st.info("No NT model predictions above the confidence threshold. Try lowering it in the sidebar.")
 
