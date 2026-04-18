@@ -12,6 +12,7 @@ import math
 import json
 from datetime import datetime
 import tensorflow as tf
+from multi_species_section import render_multi_species_section
 
 # Page config
 st.set_page_config(
@@ -579,6 +580,11 @@ if len(filtered) > 0:
         margin=dict(l=0, r=0, t=10, b=0)
     )
     st.plotly_chart(fig_timeline, width="stretch")
+
+st.divider()
+
+# ========== MULTI-SPECIES SOUND EVENT DETECTION ==========
+render_multi_species_section(selected_file)
 
 st.divider()
 

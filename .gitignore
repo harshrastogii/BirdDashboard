@@ -48,3 +48,8 @@ __pycache__/
 
 # Logs
 *.log
+
+# Detection outputs (ignore all except validation set)
+detections/*
+!detections/validation/
+!detections/validation/**

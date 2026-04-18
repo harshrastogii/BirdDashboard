@@ -1,0 +1,100 @@
+[
+  {
+    "test": "T1_Threatened_Gouldian",
+    "file": "sample_audio/Gouldian_Finch_XC125548.mp3",
+    "rationale": "Threatened species, only 7 training recordings",
+    "duration": 14.0139375,
+    "primary_detected": "Gouldian Finch",
+    "num_events": 5,
+    "unique_species_in_events": 4,
+    "species_list": [
+      "Gouldian Finch",
+      "Pheasant Coucal",
+      "Rainbow Bee eater",
+      "Whistling Kite"
+    ]
+  },
+  {
+    "test": "T2_Common_Galah",
+    "file": "sample_audio/Galah_XC107839.mp3",
+    "rationale": "Common species, well-represented in training",
+    "duration": 15.871156462585034,
+    "primary_detected": "Galah",
+    "num_events": 6,
+    "unique_species_in_events": 6,
+    "species_list": [
+      "Galah",
+      "Rainbow Bee eater",
+      "Sulphur crested Cockatoo",
+      "Torresian Crow",
+      "Whistling Kite",
+      "Willie Wagtail"
+    ]
+  },
+  {
+    "test": "T3_Owl_Barking",
+    "file": "sample_audio/Barking_Owl_XC1018800.mp3",
+    "rationale": "Simple acoustic signature, likely genuine single-species",
+    "duration": 76.45866666666667,
+    "primary_detected": "Masked Owl",
+    "num_events": 1,
+    "unique_species_in_events": 1,
+    "species_list": [
+      "Masked Owl"
+    ]
+  },
+  {
+    "test": "T4_Raptor_Whistling_Kite",
+    "file": "sample_audio/Whistling_Kite_XC104991.mp3",
+    "rationale": "Raptor - sparse calls, long gaps",
+    "duration": 10.768095238095238,
+    "primary_detected": "Whistling Kite",
+    "num_events": 4,
+    "unique_species_in_events": 3,
+    "species_list": [
+      "Partridge Pigeon",
+      "Rainbow Bee eater",
+      "Whistling Kite"
+    ]
+  },
+  {
+    "test": "T5_Small_Bird_Willie_Wagtail",
+    "file": "sample_audio/Willie_Wagtail_XC1001943.mp3",
+    "rationale": "Small passerine with distinctive chip-chip call",
+    "duration": 139.4321088435374,
+    "primary_detected": "Willie Wagtail",
+    "num_events": 23,
+    "unique_species_in_events": 8,
+    "species_list": [
+      "Bush Stone curlew",
+      "Galah",
+      "Masked Owl",
+      "Rainbow Bee eater",
+      "Red tailed Black Cockatoo",
+      "Torresian Crow",
+      "Whistling Kite",
+      "Willie Wagtail"
+    ]
+  },
+  {
+    "test": "T6_Heldout_Laughing_Kookaburra",
+    "file": "sample_audio_old/Laughing_Kookaburra_820587.mp3",
+    "rationale": "HELD-OUT - never seen during training",
+    "duration": 47.01648526077098,
+    "primary_detected": "Whistling Kite",
+    "num_events": 27,
+    "unique_species_in_events": 10,
+    "species_list": [
+      "Bush Stone curlew",
+      "Channel billed Cuckoo",
+      "Diamond Dove",
+      "Galah",
+      "Hooded Parrot",
+      "Masked Owl",
+      "Sulphur crested Cockatoo",
+      "Tawny Frogmouth",
+      "Whistling Kite",
+      "Willie Wagtail"
+    ]
+  }
+]
