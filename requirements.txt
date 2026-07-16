@@ -1,8 +1,23 @@
-streamlit>=1.30.0
-pandas>=2.0.0
-numpy>=1.24.0
-librosa>=0.10.0
-plotly>=5.15.0
-tensorflow>=2.15.0
-scikit-learn>=1.3.0
-birdnet-analyzer>=2.4.0
+# NT Bird Acoustic Monitoring platform — Python dependencies
+# Tested on Python 3.13. Versions are pinned to the exact set the project is
+# developed and validated against, for reproducible environments across
+# machines and the upcoming FastAPI backend / containerised deployments.
+
+# --- Dashboard / UI (Streamlit app; to be superseded by the Next.js frontend) ---
+streamlit==1.55.0
+plotly==6.6.0
+
+# --- Data / numerics ---
+pandas==2.3.3
+numpy==2.4.3
+scikit-learn==1.8.0
+
+# --- Audio processing ---
+librosa==0.11.0
+soundfile==0.13.1      # WAV encoding for the Listen & Label audio windows
+resampy==0.4.3         # librosa resampling backend
+matplotlib==3.10.8     # multi-species detection timeline plots
+
+# --- Machine learning / inference ---
+tensorflow==2.21.0
+birdnet-analyzer==2.4.0

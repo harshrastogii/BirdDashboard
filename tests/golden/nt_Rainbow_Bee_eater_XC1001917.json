@@ -1,0 +1,40 @@
+{
+  "fixture": "sample_audio/Rainbow_Bee_eater_XC1001917.mp3",
+  "rows": [
+    {
+      "Start (s)": 0.0,
+      "End (s)": 3.0,
+      "Species": "Rainbow Bee eater",
+      "Confidence": 0.999993085861206,
+      "Rank": 1
+    },
+    {
+      "Start (s)": 0.0,
+      "End (s)": 3.0,
+      "Species": "Blue winged Kookaburra",
+      "Confidence": 5.223289008426946e-06,
+      "Rank": 2
+    },
+    {
+      "Start (s)": 0.0,
+      "End (s)": 3.0,
+      "Species": "Willie Wagtail",
+      "Confidence": 1.3405870049609803e-06,
+      "Rank": 3
+    },
+    {
+      "Start (s)": 0.0,
+      "End (s)": 3.0,
+      "Species": "Helmeted Friarbird",
+      "Confidence": 3.369176511114347e-07,
+      "Rank": 4
+    },
+    {
+      "Start (s)": 0.0,
+      "End (s)": 3.0,
+      "Species": "Black Kite",
+      "Confidence": 2.171167778897143e-08,
+      "Rank": 5
+    }
+  ]
+}

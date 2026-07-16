@@ -48,13 +48,14 @@ import matplotlib.pyplot as plt
 import librosa
 import soundfile as sf
 
-BASE_DIR = os.path.expanduser("~/BirdDashboard")
-DETECTOR_SCRIPT = os.path.join(BASE_DIR, "multi_species_detector_v5_1.py")
-DETECTIONS_DIR = os.path.join(BASE_DIR, "detections")
-BIRDNET_RESULTS_DIR = os.path.join(BASE_DIR, "birdnet_results")
-SAMPLE_AUDIO_DIR = os.path.join(BASE_DIR, "sample_audio")
-SAMPLE_AUDIO_OLD_DIR = os.path.join(BASE_DIR, "sample_audio_old")
-LABELS_DIR = os.path.join(BASE_DIR, "detections", "labels")  # ground-truth labels live here
+# Paths are centralised in config.py (portable, env-overridable).
+import config
+
+BASE_DIR = config.BASE_DIR
+DETECTOR_SCRIPT = config.DETECTOR_SCRIPT
+DETECTIONS_DIR = config.DETECTIONS_DIR
+SAMPLE_AUDIO_DIR = config.SAMPLE_AUDIO_DIR
+SAMPLE_AUDIO_OLD_DIR = config.SAMPLE_AUDIO_OLD_DIR
 
 EVENTS_PER_PAGE = 10
 

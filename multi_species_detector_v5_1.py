@@ -42,11 +42,15 @@ import matplotlib.pyplot as plt
 warnings.filterwarnings("ignore", category=UserWarning, module="librosa")
 
 # === Configuration ===
-BASE_DIR = os.path.expanduser("~/BirdDashboard")
-CLASSIFIER_PATH = os.path.join(BASE_DIR, "models", "NT_Bird_BirdNET_Classifier.tflite")
-LABELS_PATH = os.path.join(BASE_DIR, "models", "NT_Bird_BirdNET_Classifier_Labels.txt")
-OUTPUT_DIR = os.path.join(BASE_DIR, "detections")
-TEMP_DIR = os.path.join(BASE_DIR, "detections", "_birdnet_temp")
+# Paths are centralised in config.py (portable, env-overridable). config.py
+# lives in the repo root, which is on sys.path when this script runs.
+import config
+
+BASE_DIR = config.BASE_DIR
+CLASSIFIER_PATH = config.CLASSIFIER_TFLITE_PATH
+LABELS_PATH = config.CLASSIFIER_LABELS_PATH
+OUTPUT_DIR = config.DETECTIONS_DIR
+TEMP_DIR = config.DETECTIONS_DIR / "_birdnet_temp"
 
 # BirdNET analysis parameters
 DEFAULT_MIN_CONF = 0.1            # Low floor so BirdNET returns everything
@@ -477,7 +481,7 @@ def main():
         "audio_path": audio_path,
         "duration_seconds": duration,
         "model_version": "v5.1_birdnet_dual_threshold",
-        "classifier": CLASSIFIER_PATH,
+        "classifier": str(CLASSIFIER_PATH),
         "primary_species": primary_species,
         "parameters": {
             "min_conf": args.min_conf,

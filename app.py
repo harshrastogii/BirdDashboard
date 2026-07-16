@@ -12,6 +12,7 @@ import math
 import json
 from datetime import datetime
 import tensorflow as tf
+import config
 from multi_species_section import render_multi_species_section
 
 # Page config
@@ -122,8 +123,8 @@ def compute_simpson_index(species_counts):
     return 1 - d
 
 # ========== NT CUSTOM MODEL ==========
-MODEL_PATH = "models/nt_bird_cnn_best.keras"
-LABEL_MAP_PATH = "spectrograms/label_map.json"
+MODEL_PATH = config.NT_MODEL_PATH
+LABEL_MAP_PATH = config.NT_LABEL_MAP_PATH
 
 @st.cache_resource
 def load_nt_model():
@@ -218,38 +219,73 @@ uploaded_files = st.sidebar.file_uploader(
     help="Upload bird audio recordings to analyse with BirdNET. Supported formats: MP3, WAV, FLAC, OGG."
 )
 
+SELECT_KEY = "selected_recording"
+
 if uploaded_files:
-    upload_dir = "sample_audio"
-    os.makedirs(upload_dir, exist_ok=True)
-    new_files = []
-    for uf in uploaded_files:
-        save_path = os.path.join(upload_dir, uf.name)
-        if not os.path.exists(save_path):
-            with open(save_path, "wb") as f:
-                f.write(uf.getbuffer())
-            new_files.append(save_path)
-    
-    if new_files:
-        with st.sidebar.status("Analysing uploaded audio with BirdNET...", expanded=True) as status:
-            try:
-                from birdnet_analyzer import analyze
-                st.write(f"Processing {len(new_files)} new file(s)...")
-                analyze(
-                    audio_input="sample_audio",
-                    output="birdnet_results2",
-                    min_conf=0.05,
-                    rtype="csv",
-                    skip_existing_results=True
-                )
-                status.update(label="Analysis complete!", state="complete")
-                st.cache_data.clear()
-            except Exception as e:
-                status.update(label=f"Error: {e}", state="error")
+    # Process each uploaded file exactly once (file_id is stable across the
+    # reruns that Streamlit triggers while the uploader still holds the file),
+    # so later widget interactions don't re-trigger analysis or noise.
+    handled_ids = st.session_state.setdefault("_handled_upload_ids", set())
+    fresh = [uf for uf in uploaded_files if uf.file_id not in handled_ids]
+
+    if fresh:
+        os.makedirs(config.SAMPLE_AUDIO_DIR, exist_ok=True)
+        saved_new = []
+        skipped_existing = []
+        for uf in fresh:
+            save_path = config.SAMPLE_AUDIO_DIR / uf.name
+            if save_path.exists():
+                skipped_existing.append(uf.name)
+            else:
+                save_path.write_bytes(uf.getbuffer())
+                saved_new.append(save_path)
+            handled_ids.add(uf.file_id)
+
+        if skipped_existing:
+            st.sidebar.info(
+                "Already in the library (skipped): " + ", ".join(skipped_existing)
+            )
+
+        if saved_new:
+            with st.sidebar.status(
+                f"Analysing {len(saved_new)} new recording(s) with BirdNET...",
+                expanded=True,
+            ) as status:
+                try:
+                    from birdnet_analyzer import analyze
+                    first_ref = None
+                    for path in saved_new:
+                        st.write(f"Processing `{path.name}`...")
+                        # Analyse ONLY the new file (not the whole directory),
+                        # so one unrelated bad recording can't abort the batch.
+                        # Pass a path relative to BASE_DIR so BirdNET writes the
+                        # File column as "sample_audio/<name>", matching every
+                        # other recording (required for selection + playback).
+                        rel_input = os.path.relpath(path, config.BASE_DIR)
+                        analyze(
+                            audio_input=rel_input,
+                            output=str(config.BIRDNET_RESULTS_DIR),
+                            min_conf=0.05,
+                            rtype="csv",
+                            skip_existing_results=True,
+                        )
+                        if first_ref is None:
+                            first_ref = rel_input
+                    status.update(label="Analysis complete!", state="complete")
+                    st.cache_data.clear()
+                    # Make the first freshly uploaded recording the active one,
+                    # so the user immediately sees their upload instead of the
+                    # dashboard staying on the previous selection.
+                    if first_ref is not None:
+                        st.session_state[SELECT_KEY] = first_ref
+                except Exception as e:
+                    status.update(label="Analysis failed", state="error")
+                    st.exception(e)
 
 st.sidebar.divider()
 
 # Load results
-results_dir = "birdnet_results2"
+results_dir = config.BIRDNET_RESULTS_DIR
 df = load_all_results(results_dir)
 
 if df.empty:
@@ -258,11 +294,18 @@ if df.empty:
 
 # File filter
 files = sorted(df["File"].unique())
+# Honour an auto-selected upload if it produced detections; otherwise fall
+# back to the first recording (guards against a silent upload that yielded no
+# rows and therefore isn't among the options).
+desired = st.session_state.get(SELECT_KEY)
+default_index = files.index(desired) if desired in files else 0
 selected_file = st.sidebar.selectbox(
     "Select recording",
     options=files,
+    index=default_index,
     format_func=lambda x: os.path.basename(x).replace(".mp3", "").replace(".wav", "").replace("_", " ")
 )
+st.session_state[SELECT_KEY] = selected_file
 
 # Confidence slider
 min_confidence = st.sidebar.slider(
