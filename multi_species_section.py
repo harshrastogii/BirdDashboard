@@ -37,7 +37,6 @@ import os
 import json
 import subprocess
 import sys
-import io
 from datetime import datetime
 from pathlib import Path
 
@@ -45,11 +44,9 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
-import librosa
-import soundfile as sf
 
-# Paths are centralised in config.py (portable, env-overridable).
-import config
+# All ML / audio / path logic lives in the framework-agnostic birddash package.
+from birddash import config, audio
 
 BASE_DIR = config.BASE_DIR
 DETECTOR_SCRIPT = config.DETECTOR_SCRIPT
@@ -117,16 +114,10 @@ def _load_detection_results(audio_path):
 
 @st.cache_data(show_spinner=False, max_entries=8)
 def _load_audio_window(audio_path: str, start_sec: float, end_sec: float):
-    """Load just a slice of audio. Cached so repeated clicks on the same window
-    don't reload from disk. Returns (samples, sample_rate, wav_bytes)."""
-    duration = max(0.1, end_sec - start_sec)
-    y, sr = librosa.load(audio_path, sr=None, offset=start_sec, duration=duration, mono=True)
-
-    # Encode to in-memory WAV bytes for st.audio
-    buf = io.BytesIO()
-    sf.write(buf, y, sr, format="WAV", subtype="PCM_16")
-    buf.seek(0)
-    return y, sr, buf.read()
+    """Load a slice of audio as WAV bytes for st.audio. Cached so repeated
+    clicks on the same window don't reload from disk. Delegates to
+    birddash.audio; the cache decorator is the only UI-specific concern."""
+    return audio.extract_audio_window(audio_path, start_sec, end_sec)
 
 
 def _plot_timeline(events, audio_duration, primary_species):

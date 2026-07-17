@@ -1,0 +1,1 @@
+NT Custom Classifier (v5) vs global BirdNET v2.4 on the 23 recordings scored by both models (synonym-aware). Bars show the correct-detection rate with Wilson 95% confidence intervals; the exact McNemar paired test gives p = 0.062 (not significant at alpha 0.05). Point estimates favour the NT model; the difference is not yet statistically distinguishable at this sample size.

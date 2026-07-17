@@ -1,0 +1,741 @@
+{
+  "model": "NT Custom Classifier (v5) \u2014 recording-level held-out",
+  "description": "v5.2 approach evaluated on unseen recordings (retrained on the train split).",
+  "provenance": {
+    "method": "recording-level held-out; classifier retrained on train split",
+    "seed": 42,
+    "test_fraction": 0.2,
+    "n_test_recordings": 262,
+    "n_classes": 25,
+    "augmentation": "disabled (mixup/upsampling omitted \u2014 conservative estimate)",
+    "eval_classifier": "evaluation/v5/eval_classifier.tflite",
+    "computed_by": "evaluate_v5.py"
+  },
+  "accuracy": 0.8817,
+  "macro_f1": 0.8328,
+  "weighted_f1": 0.8705,
+  "macro_auroc": 0.9797,
+  "macro_auprc": 0.9207,
+  "per_species": [
+    {
+      "species": "Diamond Dove",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 2,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "precision_ci": {
+        "point": 1.0,
+        "low": 0.1581,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.8419,
+        "reliable": false
+      },
+      "recall_ci": {
+        "point": 1.0,
+        "low": 0.1581,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.8419,
+        "reliable": false
+      },
+      "reliable": false
+    },
+    {
+      "species": "Gouldian Finch",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 1,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "precision_ci": {
+        "point": 1.0,
+        "low": 0.025,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.975,
+        "reliable": false
+      },
+      "recall_ci": {
+        "point": 1.0,
+        "low": 0.025,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.975,
+        "reliable": false
+      },
+      "reliable": false
+    },
+    {
+      "species": "Hooded Parrot",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 1,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "precision_ci": {
+        "point": 1.0,
+        "low": 0.025,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.975,
+        "reliable": false
+      },
+      "recall_ci": {
+        "point": 1.0,
+        "low": 0.025,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.975,
+        "reliable": false
+      },
+      "reliable": false
+    },
+    {
+      "species": "Magpie Goose",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 6,
+      "auroc": 0.9993,
+      "auprc": 0.9762,
+      "precision_ci": {
+        "point": 1.0,
+        "low": 0.5407,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.4593,
+        "reliable": true
+      },
+      "recall_ci": {
+        "point": 1.0,
+        "low": 0.5407,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.4593,
+        "reliable": true
+      },
+      "reliable": true
+    },
+    {
+      "species": "Partridge Pigeon",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 1,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "precision_ci": {
+        "point": 1.0,
+        "low": 0.025,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.975,
+        "reliable": false
+      },
+      "recall_ci": {
+        "point": 1.0,
+        "low": 0.025,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.975,
+        "reliable": false
+      },
+      "reliable": false
+    },
+    {
+      "species": "Rainbow Bee eater",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 13,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "precision_ci": {
+        "point": 1.0,
+        "low": 0.7529,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.2471,
+        "reliable": true
+      },
+      "recall_ci": {
+        "point": 1.0,
+        "low": 0.7529,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.2471,
+        "reliable": true
+      },
+      "reliable": true
+    },
+    {
+      "species": "Sulphur crested Cockatoo",
+      "precision": 1.0,
+      "recall": 0.9375,
+      "f1": 0.9677,
+      "support": 16,
+      "auroc": 0.9964,
+      "auprc": 0.9681,
+      "precision_ci": {
+        "point": 1.0,
+        "low": 0.782,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.218,
+        "reliable": true
+      },
+      "recall_ci": {
+        "point": 0.9375,
+        "low": 0.6977,
+        "high": 0.9984,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.3007,
+        "reliable": true
+      },
+      "reliable": true
+    },
+    {
+      "species": "Bush Stone curlew",
+      "precision": 1.0,
+      "recall": 0.9,
+      "f1": 0.9474,
+      "support": 10,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "precision_ci": {
+        "point": 1.0,
+        "low": 0.6637,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.3363,
+        "reliable": true
+      },
+      "recall_ci": {
+        "point": 0.9,
+        "low": 0.555,
+        "high": 0.9975,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.4425,
+        "reliable": true
+      },
+      "reliable": true
+    },
+    {
+      "species": "Tawny Frogmouth",
+      "precision": 0.9,
+      "recall": 1.0,
+      "f1": 0.9474,
+      "support": 9,
+      "auroc": 0.9996,
+      "auprc": 0.9889,
+      "precision_ci": {
+        "point": 0.9,
+        "low": 0.555,
+        "high": 0.9975,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.4425,
+        "reliable": true
+      },
+      "recall_ci": {
+        "point": 1.0,
+        "low": 0.6637,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.3363,
+        "reliable": true
+      },
+      "reliable": true
+    },
+    {
+      "species": "Helmeted Friarbird",
+      "precision": 0.9444,
+      "recall": 0.9444,
+      "f1": 0.9444,
+      "support": 18,
+      "auroc": 0.9982,
+      "auprc": 0.9814,
+      "precision_ci": {
+        "point": 0.9444,
+        "low": 0.7271,
+        "high": 0.9986,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.2715,
+        "reliable": true
+      },
+      "recall_ci": {
+        "point": 0.9444,
+        "low": 0.7271,
+        "high": 0.9986,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.2715,
+        "reliable": true
+      },
+      "reliable": true
+    },
+    {
+      "species": "Blue winged Kookaburra",
+      "precision": 0.875,
+      "recall": 1.0,
+      "f1": 0.9333,
+      "support": 14,
+      "auroc": 0.9997,
+      "auprc": 0.9952,
+      "precision_ci": {
+        "point": 0.875,
+        "low": 0.6165,
+        "high": 0.9845,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.368,
+        "reliable": true
+      },
+      "recall_ci": {
+        "point": 1.0,
+        "low": 0.7684,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.2316,
+        "reliable": true
+      },
+      "reliable": true
+    },
+    {
+      "species": "Black Kite",
+      "precision": 0.8421,
+      "recall": 1.0,
+      "f1": 0.9143,
+      "support": 16,
+      "auroc": 0.9997,
+      "auprc": 0.9963,
+      "precision_ci": {
+        "point": 0.8421,
+        "low": 0.6042,
+        "high": 0.9662,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.362,
+        "reliable": true
+      },
+      "recall_ci": {
+        "point": 1.0,
+        "low": 0.7941,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.2059,
+        "reliable": true
+      },
+      "reliable": true
+    },
+    {
+      "species": "Laughing Kookaburra",
+      "precision": 0.8824,
+      "recall": 0.9375,
+      "f1": 0.9091,
+      "support": 16,
+      "auroc": 0.9997,
+      "auprc": 0.9963,
+      "precision_ci": {
+        "point": 0.8824,
+        "low": 0.6356,
+        "high": 0.9854,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.3498,
+        "reliable": true
+      },
+      "recall_ci": {
+        "point": 0.9375,
+        "low": 0.6977,
+        "high": 0.9984,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.3007,
+        "reliable": true
+      },
+      "reliable": true
+    },
+    {
+      "species": "Willie Wagtail",
+      "precision": 1.0,
+      "recall": 0.8333,
+      "f1": 0.9091,
+      "support": 30,
+      "auroc": 0.9868,
+      "auprc": 0.9469,
+      "precision_ci": {
+        "point": 1.0,
+        "low": 0.8628,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.1372,
+        "reliable": true
+      },
+      "recall_ci": {
+        "point": 0.8333,
+        "low": 0.6528,
+        "high": 0.9436,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.2908,
+        "reliable": true
+      },
+      "reliable": true
+    },
+    {
+      "species": "Galah",
+      "precision": 0.8,
+      "recall": 1.0,
+      "f1": 0.8889,
+      "support": 16,
+      "auroc": 0.9992,
+      "auprc": 0.9883,
+      "precision_ci": {
+        "point": 0.8,
+        "low": 0.5634,
+        "high": 0.9427,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.3793,
+        "reliable": true
+      },
+      "recall_ci": {
+        "point": 1.0,
+        "low": 0.7941,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.2059,
+        "reliable": true
+      },
+      "reliable": true
+    },
+    {
+      "species": "Torresian Crow",
+      "precision": 0.8,
+      "recall": 1.0,
+      "f1": 0.8889,
+      "support": 16,
+      "auroc": 0.9995,
+      "auprc": 0.9931,
+      "precision_ci": {
+        "point": 0.8,
+        "low": 0.5634,
+        "high": 0.9427,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.3793,
+        "reliable": true
+      },
+      "recall_ci": {
+        "point": 1.0,
+        "low": 0.7941,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.2059,
+        "reliable": true
+      },
+      "reliable": true
+    },
+    {
+      "species": "Masked Owl",
+      "precision": 0.875,
+      "recall": 0.875,
+      "f1": 0.875,
+      "support": 8,
+      "auroc": 0.998,
+      "auprc": 0.9583,
+      "precision_ci": {
+        "point": 0.875,
+        "low": 0.4735,
+        "high": 0.9968,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.5233,
+        "reliable": false
+      },
+      "recall_ci": {
+        "point": 0.875,
+        "low": 0.4735,
+        "high": 0.9968,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.5233,
+        "reliable": false
+      },
+      "reliable": false
+    },
+    {
+      "species": "Red tailed Black Cockatoo",
+      "precision": 0.7895,
+      "recall": 0.9375,
+      "f1": 0.8571,
+      "support": 16,
+      "auroc": 0.998,
+      "auprc": 0.9726,
+      "precision_ci": {
+        "point": 0.7895,
+        "low": 0.5443,
+        "high": 0.9395,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.3951,
+        "reliable": true
+      },
+      "recall_ci": {
+        "point": 0.9375,
+        "low": 0.6977,
+        "high": 0.9984,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.3007,
+        "reliable": true
+      },
+      "reliable": true
+    },
+    {
+      "species": "Barking Owl",
+      "precision": 0.6471,
+      "recall": 1.0,
+      "f1": 0.7857,
+      "support": 11,
+      "auroc": 0.9986,
+      "auprc": 0.9687,
+      "precision_ci": {
+        "point": 0.6471,
+        "low": 0.3833,
+        "high": 0.8579,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.4746,
+        "reliable": true
+      },
+      "recall_ci": {
+        "point": 1.0,
+        "low": 0.7151,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.2849,
+        "reliable": true
+      },
+      "reliable": true
+    },
+    {
+      "species": "Channel billed Cuckoo",
+      "precision": 0.8182,
+      "recall": 0.75,
+      "f1": 0.7826,
+      "support": 12,
+      "auroc": 0.9927,
+      "auprc": 0.9188,
+      "precision_ci": {
+        "point": 0.8182,
+        "low": 0.4822,
+        "high": 0.9772,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.4949,
+        "reliable": true
+      },
+      "recall_ci": {
+        "point": 0.75,
+        "low": 0.4281,
+        "high": 0.9451,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.517,
+        "reliable": false
+      },
+      "reliable": false
+    },
+    {
+      "species": "Great Bowerbird",
+      "precision": 0.8333,
+      "recall": 0.7143,
+      "f1": 0.7692,
+      "support": 7,
+      "auroc": 0.9944,
+      "auprc": 0.8755,
+      "precision_ci": {
+        "point": 0.8333,
+        "low": 0.3588,
+        "high": 0.9958,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.637,
+        "reliable": false
+      },
+      "recall_ci": {
+        "point": 0.7143,
+        "low": 0.2904,
+        "high": 0.9633,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.6729,
+        "reliable": false
+      },
+      "reliable": false
+    },
+    {
+      "species": "Whistling Kite",
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6667,
+      "support": 8,
+      "auroc": 0.9966,
+      "auprc": 0.9417,
+      "precision_ci": {
+        "point": 1.0,
+        "low": 0.3976,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.6024,
+        "reliable": false
+      },
+      "recall_ci": {
+        "point": 0.5,
+        "low": 0.157,
+        "high": 0.843,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.686,
+        "reliable": false
+      },
+      "reliable": false
+    },
+    {
+      "species": "Pheasant Coucal",
+      "precision": 1.0,
+      "recall": 0.3333,
+      "f1": 0.5,
+      "support": 9,
+      "auroc": 0.9684,
+      "auprc": 0.6662,
+      "precision_ci": {
+        "point": 1.0,
+        "low": 0.2924,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.7076,
+        "reliable": false
+      },
+      "recall_ci": {
+        "point": 0.3333,
+        "low": 0.0749,
+        "high": 0.7007,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.6259,
+        "reliable": false
+      },
+      "reliable": false
+    },
+    {
+      "species": "Azure Kingfisher",
+      "precision": 1.0,
+      "recall": 0.2,
+      "f1": 0.3333,
+      "support": 5,
+      "auroc": 0.9969,
+      "auprc": 0.8762,
+      "precision_ci": {
+        "point": 1.0,
+        "low": 0.025,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.975,
+        "reliable": false
+      },
+      "recall_ci": {
+        "point": 0.2,
+        "low": 0.0051,
+        "high": 0.7164,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.7114,
+        "reliable": false
+      },
+      "reliable": false
+    },
+    {
+      "species": "Red Goshawk",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 1,
+      "auroc": 0.5709,
+      "auprc": 0.0088,
+      "precision_ci": {
+        "point": 0.0,
+        "low": 0.0,
+        "high": 1.0,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 1.0,
+        "reliable": false
+      },
+      "recall_ci": {
+        "point": 0.0,
+        "low": 0.0,
+        "high": 0.975,
+        "confidence": 0.95,
+        "method": "clopper_pearson",
+        "width": 0.975,
+        "reliable": false
+      },
+      "reliable": false
+    }
+  ],
+  "macro_intervals": {
+    "accuracy": {
+      "point": 0.8817,
+      "low": 0.8397,
+      "high": 0.9198,
+      "confidence": 0.95,
+      "method": "bootstrap_percentile",
+      "width": 0.0802,
+      "reliable": true
+    },
+    "macro_f1": {
+      "point": 0.8328,
+      "low": 0.774,
+      "high": 0.894,
+      "confidence": 0.95,
+      "method": "bootstrap_percentile",
+      "width": 0.1201,
+      "reliable": true
+    }
+  }
+}

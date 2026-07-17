@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+/* next-themes toggles class="dark" on <html>; make dark: respond to it. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  Avian Observatory — "Observatory" design system.
+  Deep teal + slate, restrained NT earth-tone accents. Light by default;
+  dark mode draws on a night observatory. Field-notebook cues appear via the
+  .specimen-label / metadata utilities below, not a paper texture.
+*/
+:root {
+  --background: #f7f8f7;
+  --foreground: #10201d;
+
+  --card: #ffffff;
+  --card-foreground: #10201d;
+  --popover: #ffffff;
+  --popover-foreground: #10201d;
+
+  --primary: #0d6e63;        /* observatory teal */
+  --primary-foreground: #f7fbfa;
+  --secondary: #eef1ef;
+  --secondary-foreground: #24322f;
+
+  --muted: #eef1ef;
+  --muted-foreground: #5c6b67;
+
+  --accent: #b5622f;         /* NT terracotta (used sparingly) */
+  --accent-foreground: #fff8f3;
+
+  --success: #2f7d5b;
+  --warning: #b7791f;
+  --destructive: #b3402f;
+
+  --border: #dde3e0;
+  --input: #dde3e0;
+  --ring: #0d6e63;
+
+  --radius: 0.625rem;
+
+  /* Colour-blind-safe categorical ramp (species / series). */
+  --chart-1: #0d6e63;
+  --chart-2: #b5622f;
+  --chart-3: #3b6ea5;
+  --chart-4: #7a9e3f;
+  --chart-5: #9c5aa8;
+}
+
+.dark {
+  --background: #0a1417;     /* night sky over the Top End */
+  --foreground: #e6efec;
+
+  --card: #10201f;
+  --card-foreground: #e6efec;
+  --popover: #10201f;
+  --popover-foreground: #e6efec;
+
+  --primary: #33b3a3;
+  --primary-foreground: #04110f;
+  --secondary: #1a2b2a;
+  --secondary-foreground: #d6e2df;
+
+  --muted: #162523;
+  --muted-foreground: #8fa39e;
+
+  --accent: #d0824f;
+  --accent-foreground: #1a0f08;
+
+  --success: #46a878;
+  --warning: #d6a03e;
+  --destructive: #d9634f;
+
+  --border: #233634;
+  --input: #233634;
+  --ring: #33b3a3;
+
+  --chart-1: #33b3a3;
+  --chart-2: #d0824f;
+  --chart-3: #6ba3d8;
+  --chart-4: #a3c563;
+  --chart-5: #c286cf;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+/* Field-notebook cue: small uppercase specimen / metadata labels. */
+.specimen-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}

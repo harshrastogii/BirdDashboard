@@ -1,9 +1,10 @@
 """
 Golden-file parity tests — the safety net for the incremental migration.
 
-These assert that the ML inference still produces the outputs snapshotted in
-tests/golden/. They are the guard that Phase 2 (extracting inference into
-shared modules) changes NOTHING about the scientific results.
+These assert that the extracted birddash inference package still produces the
+outputs snapshotted in tests/golden/ (captured in Phase 1 from the original
+in-app logic, before extraction). They are the guard that Phase 2 changed
+NOTHING about the scientific results.
 
 Runnable two ways:
     python tests/test_inference_parity.py       # plain, no pytest needed
@@ -19,8 +20,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-import config
-from tests import _reference
+from birddash import config, nt_model
 
 GOLDEN_DIR = Path(__file__).resolve().parent / "golden"
 CONF_TOL = 1e-4  # float tolerance for model confidence scores
@@ -29,6 +29,14 @@ CONF_TOL = 1e-4  # float tolerance for model confidence scores
 def _load_golden(name):
     with open(GOLDEN_DIR / name) as f:
         return json.load(f)
+
+
+def _predict_rows(path):
+    """Run the extracted NT model and return list-of-dict rows (golden format)."""
+    model = nt_model.load_model()
+    label_map = nt_model.load_label_map()
+    assert model is not None, "NT model not found"
+    return model, label_map, nt_model.predict(str(path), model, label_map).to_dict("records")
 
 
 def test_config_paths_resolve():
@@ -40,14 +48,10 @@ def test_config_paths_resolve():
 
 
 def test_nt_model_parity():
-    """NT CNN produces outputs identical to the pre-refactor golden."""
-    model = _reference.load_nt_model()
-    label_map = _reference.load_label_map()
-    assert model is not None
-
+    """Extracted NT CNN reproduces the pre-refactor golden exactly."""
     golden = _load_golden("nt_Rainbow_Bee_eater_XC1001917.json")
     path = config.BASE_DIR / golden["fixture"]
-    rows = _reference.predict_with_nt_model(str(path), model, label_map)
+    _, _, rows = _predict_rows(path)
 
     expected = golden["rows"]
     assert len(rows) == len(expected), (
@@ -66,13 +70,23 @@ def test_nt_model_parity():
 
 
 def test_nt_model_determinism():
-    """Same input twice -> byte-identical predictions (no hidden randomness)."""
-    model = _reference.load_nt_model()
-    label_map = _reference.load_label_map()
+    """Same input twice -> identical predictions (no hidden randomness)."""
     path = config.BASE_DIR / "sample_audio/Rainbow_Bee_eater_XC1001917.mp3"
-    a = _reference.predict_with_nt_model(str(path), model, label_map)
-    b = _reference.predict_with_nt_model(str(path), model, label_map)
+    model = nt_model.load_model()
+    label_map = nt_model.load_label_map()
+    a = nt_model.predict(str(path), model, label_map).to_dict("records")
+    b = nt_model.predict(str(path), model, label_map).to_dict("records")
     assert a == b
+
+
+def test_birddash_has_no_streamlit_dependency():
+    """The core package must never import Streamlit (framework independence)."""
+    import importlib
+    import birddash
+    pkg_dir = Path(birddash.__file__).resolve().parent
+    for py in pkg_dir.glob("*.py"):
+        text = py.read_text()
+        assert "import streamlit" not in text, f"{py.name} imports streamlit"
 
 
 def _run_all():

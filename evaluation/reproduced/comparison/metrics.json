@@ -1,0 +1,319 @@
+{
+  "birdnet_correct": 18,
+  "nt_correct": 23,
+  "total_with_ground_truth": 23,
+  "nt_interval": {
+    "point": 1.0,
+    "low": 0.8569,
+    "high": 1.0,
+    "confidence": 0.95,
+    "method": "wilson",
+    "width": 0.1431,
+    "reliable": true
+  },
+  "birdnet_interval": {
+    "point": 0.7826,
+    "low": 0.581,
+    "high": 0.9034,
+    "confidence": 0.95,
+    "method": "wilson",
+    "width": 0.3224,
+    "reliable": true
+  },
+  "mcnemar": {
+    "only_a_correct": 5,
+    "only_b_correct": 0,
+    "n_discordant": 5,
+    "p_value": 0.0625,
+    "significant_at_0_05": false,
+    "method": "mcnemar_exact_binomial"
+  },
+  "provenance": {
+    "n_recordings": 23,
+    "ground_truth_source": "verified labels from training_data/dataset_metadata.csv (fallback: catalog filename match)",
+    "scoring": "does the model detect the recording's verified species (synonym-aware)?",
+    "synonym_handling": [
+      {
+        "canonical": "Bush Stone-curlew",
+        "synonyms": [
+          "Bush Thick-knee",
+          "Bush Thicknee",
+          "Southern Stone-curlew"
+        ],
+        "source": "IOC World Bird List v14 ('Bush Thick-knee') = BirdLife Australia 'Bush Stone-curlew' (Burhinus grallarius)."
+      }
+    ],
+    "rate_interval": "Wilson score 95% (Wilson 1927)",
+    "paired_test": "exact McNemar (McNemar 1947; Edwards 1948)",
+    "note": "Snapshot of the live per-recording detection test. The app computes this on demand with the identical service code, so the numbers match.",
+    "type": "live_comparison",
+    "computed_by": "persist_comparison_artifact.py -> api.services.model_comparison.compare",
+    "generated_at": "2026-07-17T12:34:45+00:00"
+  },
+  "per_recording": [
+    {
+      "recording_id": "4a2b4772-49fd-447f-9785-835aa1e0fd3c",
+      "name": "Azure Kingfisher XC1026749",
+      "ground_truth": "Azure Kingfisher",
+      "evaluated": true,
+      "birdnet_top": "Eurasian Treecreeper",
+      "birdnet_confidence": 0.3726,
+      "birdnet_correct": false,
+      "nt_top": "Azure Kingfisher",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "1538ebe0-2723-462f-90c0-a0554a99f202",
+      "name": "Barking Owl XC1018800",
+      "ground_truth": "Barking Owl",
+      "evaluated": true,
+      "birdnet_top": "Barking Owl",
+      "birdnet_confidence": 0.9999,
+      "birdnet_correct": true,
+      "nt_top": "Barking Owl",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "36e5507d-358e-4dfa-bab4-5bdb1565c729",
+      "name": "Black Kite XC1001933",
+      "ground_truth": "Black Kite",
+      "evaluated": true,
+      "birdnet_top": "Black Kite",
+      "birdnet_confidence": 0.8623,
+      "birdnet_correct": true,
+      "nt_top": "Black Kite",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "3c9b196f-a6a3-4f0c-a34e-61d3cfcff69e",
+      "name": "Blue winged Kookaburra XC1001935",
+      "ground_truth": "Blue winged Kookaburra",
+      "evaluated": true,
+      "birdnet_top": "Blue-winged Kookaburra",
+      "birdnet_confidence": 0.9998,
+      "birdnet_correct": true,
+      "nt_top": "Blue winged Kookaburra",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "da2e631e-971c-4d88-bc5b-cd73e4d78d1c",
+      "name": "Bush Stone curlew XC1038616",
+      "ground_truth": "Bush Stone curlew",
+      "evaluated": true,
+      "birdnet_top": "Bush Thick-knee",
+      "birdnet_confidence": 0.9611,
+      "birdnet_correct": true,
+      "nt_top": "Bush Stone curlew",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "ad868987-445b-48be-8e34-ddcb532c3e46",
+      "name": "Channel billed Cuckoo XC1044991",
+      "ground_truth": "Channel billed Cuckoo",
+      "evaluated": true,
+      "birdnet_top": "Channel-billed Cuckoo",
+      "birdnet_confidence": 0.9069,
+      "birdnet_correct": true,
+      "nt_top": "Channel billed Cuckoo",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "c68929b3-c7f4-4ad5-ac6a-1ad30301c056",
+      "name": "Diamond Dove XC286953",
+      "ground_truth": "Diamond Dove",
+      "evaluated": true,
+      "birdnet_top": "New Zealand Bellbird",
+      "birdnet_confidence": 0.6728,
+      "birdnet_correct": false,
+      "nt_top": "Diamond Dove",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "660d5589-8877-45b4-988f-ec901110ead3",
+      "name": "Galah XC107839",
+      "ground_truth": "Galah",
+      "evaluated": true,
+      "birdnet_top": "Galah",
+      "birdnet_confidence": 0.9879,
+      "birdnet_correct": true,
+      "nt_top": "Galah",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "b1c2247b-4225-4b03-a6c1-904b2bd5b969",
+      "name": "Gouldian Finch XC125548",
+      "ground_truth": "Gouldian Finch",
+      "evaluated": true,
+      "birdnet_top": "Water Pipit",
+      "birdnet_confidence": 0.7815,
+      "birdnet_correct": false,
+      "nt_top": "Gouldian Finch",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "e5d1855f-e3f0-4f87-9020-cbe137847d20",
+      "name": "Great Bowerbird XC104984",
+      "ground_truth": "Great Bowerbird",
+      "evaluated": true,
+      "birdnet_top": "Great Bowerbird",
+      "birdnet_confidence": 0.6391,
+      "birdnet_correct": true,
+      "nt_top": "Great Bowerbird",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "200c3515-c5d6-4e28-b62a-c4a61d0b9815",
+      "name": "Helmeted Friarbird XC1025968",
+      "ground_truth": "Helmeted Friarbird",
+      "evaluated": true,
+      "birdnet_top": "Helmeted Friarbird",
+      "birdnet_confidence": 0.1612,
+      "birdnet_correct": true,
+      "nt_top": "Helmeted Friarbird",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "f6fcfb2c-3c2e-47cf-8e43-cd1c3ced7d74",
+      "name": "Hooded Parrot XC287822",
+      "ground_truth": "Hooded Parrot",
+      "evaluated": true,
+      "birdnet_top": "Tree Pipit",
+      "birdnet_confidence": 0.2164,
+      "birdnet_correct": false,
+      "nt_top": "Hooded Parrot",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "791bcfa3-15ba-4467-afd0-af7bd9f7354c",
+      "name": "Laughing Kookaburra XC1019423",
+      "ground_truth": "Laughing Kookaburra",
+      "evaluated": true,
+      "birdnet_top": "Laughing Kookaburra",
+      "birdnet_confidence": 0.9998,
+      "birdnet_correct": true,
+      "nt_top": "Laughing Kookaburra",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "45fad47d-9d0c-4e47-85b2-0393ccb156d8",
+      "name": "Magpie Goose XC1066367",
+      "ground_truth": "Magpie Goose",
+      "evaluated": true,
+      "birdnet_top": "Magpie Goose",
+      "birdnet_confidence": 0.9795,
+      "birdnet_correct": true,
+      "nt_top": "Magpie Goose",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "eb93c1cb-b07b-4d85-8857-03e2d75854df",
+      "name": "Masked Owl XC1018770",
+      "ground_truth": "Masked Owl",
+      "evaluated": true,
+      "birdnet_top": "Elegant Trogon",
+      "birdnet_confidence": 0.5982,
+      "birdnet_correct": false,
+      "nt_top": "Masked Owl",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "5c271cc7-3947-4b45-905f-b52c4160fa04",
+      "name": "Pheasant Coucal XC1026039",
+      "ground_truth": "Pheasant Coucal",
+      "evaluated": true,
+      "birdnet_top": "Pheasant Coucal",
+      "birdnet_confidence": 0.5419,
+      "birdnet_correct": true,
+      "nt_top": "Pheasant Coucal",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "a2836040-c052-4fe7-9498-e9644cdb896b",
+      "name": "Rainbow Bee eater XC1001917",
+      "ground_truth": "Rainbow Bee eater",
+      "evaluated": true,
+      "birdnet_top": "Rainbow Bee-eater",
+      "birdnet_confidence": 0.9773,
+      "birdnet_correct": true,
+      "nt_top": "Rainbow Bee eater",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "77e18019-c0ea-42ff-9fcf-5168ba9f3952",
+      "name": "Red tailed Black Cockatoo XC1066421",
+      "ground_truth": "Red tailed Black Cockatoo",
+      "evaluated": true,
+      "birdnet_top": "Red-tailed Black-Cockatoo",
+      "birdnet_confidence": 0.9734,
+      "birdnet_correct": true,
+      "nt_top": "Red tailed Black Cockatoo",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "fb05100b-fd81-4d95-a04b-b9022362c229",
+      "name": "Sulphur crested Cockatoo XC1029259",
+      "ground_truth": "Sulphur crested Cockatoo",
+      "evaluated": true,
+      "birdnet_top": "Sulphur-crested Cockatoo",
+      "birdnet_confidence": 0.8761,
+      "birdnet_correct": true,
+      "nt_top": "Sulphur crested Cockatoo",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "ce3e0116-4424-4da1-87c4-cbc4ba14ce3f",
+      "name": "Tawny Frogmouth XC1024915",
+      "ground_truth": "Tawny Frogmouth",
+      "evaluated": true,
+      "birdnet_top": "Chirruping Wedgebill",
+      "birdnet_confidence": 0.6983,
+      "birdnet_correct": true,
+      "nt_top": "Tawny Frogmouth",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "b68e7326-2d8d-4ae1-8c59-38e4ab7cdc04",
+      "name": "Torresian Crow XC1066508",
+      "ground_truth": "Torresian Crow",
+      "evaluated": true,
+      "birdnet_top": "Torresian Crow",
+      "birdnet_confidence": 0.9974,
+      "birdnet_correct": true,
+      "nt_top": "Torresian Crow",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "d2d89f1a-95f7-4ac9-b3d7-556e18eb5d15",
+      "name": "Whistling Kite XC104991",
+      "ground_truth": "Whistling Kite",
+      "evaluated": true,
+      "birdnet_top": "Whistling Kite",
+      "birdnet_confidence": 0.6623,
+      "birdnet_correct": true,
+      "nt_top": "Whistling Kite",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "362d3d5f-5bb1-497d-946b-a4bac918c751",
+      "name": "Willie Wagtail XC1001943",
+      "ground_truth": "Willie Wagtail",
+      "evaluated": true,
+      "birdnet_top": "Willie-wagtail",
+      "birdnet_confidence": 0.988,
+      "birdnet_correct": true,
+      "nt_top": "Willie Wagtail",
+      "nt_correct": true
+    },
+    {
+      "recording_id": "a9c455e2-bae0-4437-ae64-ef4dca1addf7",
+      "name": "XC577277 - White-throated Grasswren - Amytornis woodwardi",
+      "ground_truth": null,
+      "evaluated": false,
+      "birdnet_top": null,
+      "birdnet_confidence": null,
+      "birdnet_correct": null,
+      "nt_top": null,
+      "nt_correct": null
+    }
+  ]
+}

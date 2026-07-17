@@ -1,0 +1,25 @@
+true\pred,Azure Kingfisher,Barking Owl,Black Kite,Blue winged Kookaburra,Bush Stone curlew,Channel billed Cuckoo,Diamond Dove,Galah,Gouldian Finch,Great Bowerbird,Helmeted Friarbird,Hooded Parrot,Laughing Kookaburra,Magpie Goose,Masked Owl,Partridge Pigeon,Pheasant Coucal,Rainbow Bee eater,Red tailed Black Cockatoo,Sulphur crested Cockatoo,Tawny Frogmouth,Torresian Crow,Whistling Kite,Willie Wagtail
+Azure Kingfisher,24,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+Barking Owl,0,129,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0
+Black Kite,0,0,186,0,0,0,1,0,0,0,1,0,1,0,1,0,0,2,2,0,0,0,1,1
+Blue winged Kookaburra,0,0,1,146,0,1,0,0,0,2,0,0,3,0,1,0,0,1,2,0,1,0,0,0
+Bush Stone curlew,0,2,1,0,93,0,0,0,0,0,1,0,3,0,0,0,0,0,1,0,0,0,0,0
+Channel billed Cuckoo,0,0,0,0,0,72,0,0,0,1,0,0,0,0,1,0,0,0,1,3,0,2,0,0
+Diamond Dove,0,0,3,0,0,0,17,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1
+Galah,0,0,2,0,0,1,0,119,0,2,0,0,2,0,0,0,0,1,2,5,0,0,2,3
+Gouldian Finch,0,0,0,0,1,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Great Bowerbird,0,0,0,0,0,0,0,1,0,88,4,0,0,0,0,0,0,0,0,0,0,0,0,0
+Helmeted Friarbird,0,1,0,2,1,0,0,0,0,0,127,0,0,0,0,0,0,0,2,1,1,1,0,1
+Hooded Parrot,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,1,0,0,0,0
+Laughing Kookaburra,0,0,1,3,1,1,0,1,0,0,0,0,127,0,0,0,0,0,0,2,0,1,0,1
+Magpie Goose,0,0,0,0,0,0,0,1,0,0,0,0,1,67,0,0,0,0,0,0,0,2,0,0
+Masked Owl,0,0,1,0,0,0,0,0,0,0,0,0,0,0,86,0,0,0,0,0,2,0,0,0
+Partridge Pigeon,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,0,0,0,0,0,0,0,0
+Pheasant Coucal,0,0,0,0,0,1,0,0,0,1,1,0,1,0,0,0,80,0,1,0,1,0,0,1
+Rainbow Bee eater,0,0,2,0,1,0,0,2,0,0,1,0,0,0,1,0,0,62,0,1,1,0,0,0
+Red tailed Black Cockatoo,0,0,0,0,3,2,0,0,0,2,2,0,1,1,1,0,0,0,239,2,0,0,1,0
+Sulphur crested Cockatoo,0,0,0,0,1,1,0,1,0,0,1,0,1,0,0,0,1,0,2,258,2,0,0,1
+Tawny Frogmouth,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,110,0,1,0
+Torresian Crow,0,0,0,1,4,6,1,0,0,1,1,1,2,1,1,0,1,1,1,2,2,192,1,1
+Whistling Kite,1,0,2,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,42,0
+Willie Wagtail,0,2,1,1,2,2,0,1,0,0,0,1,3,0,2,0,0,2,0,1,1,1,1,270

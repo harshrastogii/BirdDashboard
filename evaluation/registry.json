@@ -1,0 +1,78 @@
+{
+  "_comment": "Model registry — the single source of truth for model versions and their evaluation history. Future models (v6, v7, ...) are added by appending an entry here and dropping artefacts under evaluation/original/<key>/ (traceable to original artefacts) or evaluation/reproduced/<key>/ (independent reproductions). The app renders this generically; no code change is needed to add a model.",
+  "evaluation_types": {
+    "original_evaluation": "Metrics reproduced from the ORIGINAL saved evaluation artefacts (traceable to the original experiment).",
+    "independent_reproduction": "A NEW, independent evaluation (fresh train/test split + retrain). NOT the original experiment; provided for reproducibility."
+  },
+  "models": [
+    {
+      "key": "nt_v5",
+      "name": "NT Custom Classifier (v5)",
+      "version": "5.2",
+      "family": "NT Custom Classifier",
+      "status": "production",
+      "description": "BirdNET v2.4 embeddings + a custom Northern-Territory head, deployed through the v5.2 multi-species sound-event-detection pipeline. The flagship production model.",
+      "documented": {
+        "label": "Documented research values (not yet independently reproduced)",
+        "metrics": { "AUPRC": 0.98, "AUROC": 0.99 },
+        "source": "Thesis / README",
+        "note": "Reported in the thesis/README. An exhaustive repository + git-history search found NO original v5 evaluation artefacts (predictions, probabilities, labels, curves), so these values cannot be traced to an evaluation output and are NOT independently verified."
+      },
+      "evaluations": [
+        {
+          "id": "v5-recording-holdout",
+          "type": "independent_reproduction",
+          "title": "Independent reproduction — recording-level held-out",
+          "artefact_dir": "evaluation/reproduced/v5",
+          "note": "A separate experiment, not the original thesis evaluation: a classifier retrained on a recording-level train split and evaluated on unseen recordings."
+        }
+      ]
+    },
+    {
+      "key": "birdnet_v24",
+      "name": "BirdNET v2.4 (global baseline)",
+      "version": "2.4",
+      "family": "BirdNET",
+      "status": "baseline",
+      "description": "The global pretrained BirdNET model, used as the comparison baseline. Its Northern-Territory performance is reported live on the Comparison tab.",
+      "documented": null,
+      "evaluations": []
+    },
+    {
+      "key": "cnn_v2",
+      "name": "Custom CNN (v2)",
+      "version": "2",
+      "family": "Custom CNN",
+      "status": "historical",
+      "description": "Mel-spectrogram CNN, segment-level split. Superseded — its 92.7% segment-level accuracy was inflated by data leakage (exposed by v4).",
+      "documented": null,
+      "evaluations": [
+        {
+          "id": "cnn_v2-original",
+          "type": "original_evaluation",
+          "title": "Original evaluation (traceable)",
+          "artefact_dir": "evaluation/original/cnn_v2",
+          "note": "Reproduced from the original saved test-set arrays (models/y_test_probs.npy + y_test_true.npy) — the original experiment, recomputed for traceability."
+        }
+      ]
+    },
+    {
+      "key": "cnn_v4",
+      "name": "Custom CNN (v4)",
+      "version": "4",
+      "family": "Custom CNN",
+      "status": "historical",
+      "description": "Same CNN architecture with a recording-level split — the honest (leakage-free) evaluation that exposed v2/v3's inflated accuracy.",
+      "documented": null,
+      "evaluations": [
+        {
+          "id": "cnn_v4-original",
+          "type": "original_evaluation",
+          "title": "Original evaluation (traceable)",
+          "artefact_dir": "evaluation/original/cnn_v4",
+          "note": "Reproduced from the original saved recording-level test arrays."
+        }
+      ]
+    }
+  ]
+}

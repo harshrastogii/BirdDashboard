@@ -1,0 +1,4 @@
+model,provenance,n,accuracy,accuracy_95ci,macro_f1,macro_f1_95ci,macro_auroc,macro_auprc
+Custom CNN (v2) — segment-level,Original evaluation (traceable),2770,0.9267,"[0.92, 0.94]",0.9169,"[0.90, 0.93]",0.9970,0.9643
+Custom CNN (v4) — recording-level,Original evaluation (traceable),2740,0.6661,"[0.65, 0.68]",0.5346,"[0.51, 0.56]",0.9436,0.6621
+NT Custom Classifier (v5) — recording-level held-out,Independent reproduction,262,0.8817,"[0.84, 0.92]",0.8328,"[0.77, 0.89]",0.9797,0.9207

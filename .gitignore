@@ -53,3 +53,8 @@ __pycache__/
 detections/*
 !detections/validation/
 !detections/validation/**
+
+# Retrained reproduction classifier binary — large & regenerable (evaluate_v5.py).
+# Only the .tflite binary is excluded; its labels/params/sample-count metadata and
+# all metrics/curves/npy reproducible artefacts stay under version control.
+evaluation/**/*.tflite

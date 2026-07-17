@@ -7,12 +7,11 @@ import librosa
 import plotly.express as px
 import plotly.graph_objects as go
 import os
-import glob
-import math
-import json
-from datetime import datetime
-import tensorflow as tf
-import config
+
+# All ML / inference / domain logic lives in the framework-agnostic birddash
+# package (no Streamlit inside). app.py is a thin UI layer over it.
+from birddash import config, audio, birdnet, results, metrics
+from birddash import nt_model as nt_cnn
 from multi_species_section import render_multi_species_section
 
 # Page config
@@ -78,130 +77,25 @@ with st.expander("ℹ️ About this Dashboard — Click to learn how to use it",
     - **Researchers**: Compare BirdNET's global model against our custom NT-specific model
     """)
 
-# --- Load BirdNET results ---
+# --- Cached data-access & inference wrappers -----------------------------
+# The heavy logic lives in the birddash package; these thin wrappers only add
+# Streamlit caching, which is a UI concern and stays out of the core package.
+
 @st.cache_data
 def load_all_results(results_dir):
-    all_dfs = []
-    for f in glob.glob(f"{results_dir}/*.csv"):
-        if "params" in f:
-            continue
-        df = pd.read_csv(f)
-        if len(df) > 0:
-            all_dfs.append(df)
-    if all_dfs:
-        return pd.concat(all_dfs, ignore_index=True)
-    return pd.DataFrame()
+    return results.load_results(results_dir)
 
 @st.cache_data
 def generate_spectrogram(audio_path):
-    y, sr = librosa.load(audio_path, sr=22050, duration=60)
-    S = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128, fmax=8000)
-    S_db = librosa.power_to_db(S, ref=np.max)
-    return S_db, sr, y
-
-def compute_shannon_index(species_counts):
-    """Compute Shannon diversity index H' = -sum(pi * ln(pi))"""
-    total = sum(species_counts.values())
-    if total == 0:
-        return 0
-    h = 0
-    for count in species_counts.values():
-        if count > 0:
-            pi = count / total
-            h -= pi * math.log(pi)
-    return h
-
-def compute_simpson_index(species_counts):
-    """Compute Simpson's diversity index D = 1 - sum(pi^2)"""
-    total = sum(species_counts.values())
-    if total == 0:
-        return 0
-    d = 0
-    for count in species_counts.values():
-        pi = count / total
-        d += pi ** 2
-    return 1 - d
-
-# ========== NT CUSTOM MODEL ==========
-MODEL_PATH = config.NT_MODEL_PATH
-LABEL_MAP_PATH = config.NT_LABEL_MAP_PATH
+    return audio.generate_spectrogram(audio_path)
 
 @st.cache_resource
 def load_nt_model():
-    """Load the custom NT bird CNN model."""
-    if os.path.exists(MODEL_PATH):
-        model = tf.keras.models.load_model(MODEL_PATH)
-        return model
-    return None
+    return nt_cnn.load_model(config.NT_MODEL_PATH)
 
 @st.cache_data
 def load_label_map():
-    """Load class index to species name mapping."""
-    if os.path.exists(LABEL_MAP_PATH):
-        with open(LABEL_MAP_PATH, "r") as f:
-            return json.load(f)
-    return {}
-
-def predict_with_nt_model(audio_path, model, label_map, segment_duration=3.0, sr=22050, n_mels=128):
-    """
-    Run the custom NT CNN model on an audio file.
-    MUST match training pipeline exactly: 3-sec segments, 128 mel bands, 22050Hz,
-    n_fft=2048, hop_length=512, fmin=150, fmax=15000.
-    Returns a list of dicts with segment info and predictions.
-    """
-    # Load audio
-    y, _ = librosa.load(audio_path, sr=sr, mono=True)
-    segment_samples = int(segment_duration * sr)
-    results = []
-
-    # Non-overlapping segments (same as training)
-    for start in range(0, len(y) - segment_samples + 1, segment_samples):
-        segment = y[start:start + segment_samples]
-
-        # Skip silent segments (same RMS threshold as training)
-        rms = np.sqrt(np.mean(segment ** 2))
-        if rms < 0.001:
-            continue
-
-        # Generate mel spectrogram — EXACT same parameters as preprocess.py
-        S = librosa.feature.melspectrogram(
-            y=segment,
-            sr=sr,
-            n_mels=n_mels,
-            n_fft=2048,
-            hop_length=512,
-            fmin=150,
-            fmax=15000
-        )
-        S_db = librosa.power_to_db(S, ref=np.max)
-
-        # Normalise to [0, 1] — same method as training
-        S_norm = (S_db - S_db.min())
-        if S_norm.max() > 0:
-            S_norm = S_norm / S_norm.max()
-
-        # Reshape for model: (1, 128, 130, 1)
-        input_data = S_norm.reshape(1, n_mels, S_norm.shape[1], 1)
-
-        # Predict
-        preds = model.predict(input_data, verbose=0)[0]
-        top5_indices = np.argsort(preds)[::-1][:5]
-
-        start_sec = round(start / sr, 1)
-        end_sec = round(start_sec + segment_duration, 1)
-
-        for rank, idx in enumerate(top5_indices):
-            species = label_map.get(str(idx), f"Unknown ({idx})")
-            confidence = float(preds[idx])
-            results.append({
-                "Start (s)": start_sec,
-                "End (s)": end_sec,
-                "Species": species,
-                "Confidence": confidence,
-                "Rank": rank + 1
-            })
-
-    return pd.DataFrame(results)
+    return nt_cnn.load_label_map(config.NT_LABEL_MAP_PATH)
 
 # Load NT model and label map at startup
 nt_model = load_nt_model()
@@ -252,7 +146,6 @@ if uploaded_files:
                 expanded=True,
             ) as status:
                 try:
-                    from birdnet_analyzer import analyze
                     first_ref = None
                     for path in saved_new:
                         st.write(f"Processing `{path.name}`...")
@@ -262,13 +155,7 @@ if uploaded_files:
                         # File column as "sample_audio/<name>", matching every
                         # other recording (required for selection + playback).
                         rel_input = os.path.relpath(path, config.BASE_DIR)
-                        analyze(
-                            audio_input=rel_input,
-                            output=str(config.BIRDNET_RESULTS_DIR),
-                            min_conf=0.05,
-                            rtype="csv",
-                            skip_existing_results=True,
-                        )
+                        birdnet.analyze_upload(rel_input, output_dir=config.BIRDNET_RESULTS_DIR)
                         if first_ref is None:
                             first_ref = rel_input
                     status.update(label="Analysis complete!", state="complete")
@@ -323,7 +210,7 @@ nt_top1 = None
 nt_top1_filtered = None
 if nt_model is not None and os.path.exists(selected_file):
     with st.spinner("Running Custom NT Model analysis..."):
-        nt_results = predict_with_nt_model(selected_file, nt_model, nt_label_map)
+        nt_results = nt_cnn.predict(selected_file, nt_model, nt_label_map)
     if len(nt_results) > 0:
         nt_top1 = nt_results[nt_results["Rank"] == 1].copy()
         nt_top1_filtered = nt_top1[nt_top1["Confidence"] >= min_confidence]
@@ -662,8 +549,8 @@ if len(all_filtered) > 0:
         bio_data.append({
             "Recording": os.path.basename(file).replace(".mp3", "").replace(".wav", "").replace("_", " "),
             "Species Richness": len(species_counts),
-            "Shannon Index (H')": round(compute_shannon_index(species_counts), 3),
-            "Simpson Index (D)": round(compute_simpson_index(species_counts), 3),
+            "Shannon Index (H')": round(metrics.shannon_index(species_counts), 3),
+            "Simpson Index (D)": round(metrics.simpson_index(species_counts), 3),
             "Total Detections": len(file_df)
         })
     
@@ -677,12 +564,12 @@ if len(all_filtered) > 0:
     with col_bio2:
         overall_counts = all_filtered["Common name"].value_counts().to_dict()
         st.metric("Overall Shannon Index",
-                  f"{compute_shannon_index(overall_counts):.3f}",
+                  f"{metrics.shannon_index(overall_counts):.3f}",
                   help="Shannon diversity index across all recordings. Higher values (>2.0) indicate rich, diverse ecosystems")
     
     with col_bio3:
         st.metric("Overall Simpson Index",
-                  f"{compute_simpson_index(overall_counts):.3f}",
+                  f"{metrics.simpson_index(overall_counts):.3f}",
                   help="Simpson diversity index across all recordings. Values close to 1.0 indicate high evenness across species")
     
     st.dataframe(bio_df, width="stretch", hide_index=True)

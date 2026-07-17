@@ -1,13 +1,13 @@
 """
-Generate golden-file baselines of the current ML inference outputs.
+Generate golden-file baselines of the ML inference outputs.
 
-Run once (now, before any refactoring) to snapshot behaviour:
+The Phase-1 baselines under tests/golden/ were captured from the original
+in-app logic before extraction. Re-run this ONLY when a change to the model or
+pipeline is *intended* (and reviewed):
 
     python tests/generate_golden.py
 
-The snapshots under tests/golden/ become the contract that Phase 2's extracted
-inference modules must reproduce exactly. Re-run only when a change to the
-model or pipeline is *intended* (and reviewed).
+Uses the extracted birddash.nt_model package (the current source of truth).
 """
 
 import json
@@ -17,8 +17,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-import config
-from tests import _reference
+from birddash import config, nt_model
 
 GOLDEN_DIR = Path(__file__).resolve().parent / "golden"
 
@@ -29,13 +28,13 @@ NT_FIXTURES = [
 
 
 def generate_nt_golden():
-    model = _reference.load_nt_model()
-    label_map = _reference.load_label_map()
+    model = nt_model.load_model()
+    label_map = nt_model.load_label_map()
     assert model is not None, "NT model not found — cannot generate golden."
 
     for rel in NT_FIXTURES:
         path = config.BASE_DIR / rel
-        rows = _reference.predict_with_nt_model(str(path), model, label_map)
+        rows = nt_model.predict(str(path), model, label_map).to_dict("records")
         out = GOLDEN_DIR / f"nt_{Path(rel).stem}.json"
         with open(out, "w") as f:
             json.dump({"fixture": rel, "rows": rows}, f, indent=2)
