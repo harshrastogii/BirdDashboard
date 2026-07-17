@@ -1,0 +1,22 @@
+# Heroku Container Stack manifest.
+#
+# The Container Stack (Docker) is used instead of the classic Python buildpack
+# because the ~2.3 GB TensorFlow + BirdNET dependency stack exceeds the buildpack's
+# 500 MB slug limit. A Docker image has no such limit.
+#
+# build   — build the `web` process from the Dockerfile.
+# release — on every deploy, apply DB migrations then seed metadata. Both steps
+#           are idempotent (api/seed.py leaves existing rows untouched), so this
+#           is safe to run on each release.
+# run     — the web process bound to Heroku's injected $PORT (mirrors the
+#           Dockerfile CMD; a single uvicorn process to fit TensorFlow in memory).
+build:
+  docker:
+    web: Dockerfile
+release:
+  image: web
+  command:
+    - alembic upgrade head
+    - python -m api.seed
+run:
+  web: uvicorn api.main:app --host 0.0.0.0 --port $PORT

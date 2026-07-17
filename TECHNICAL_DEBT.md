@@ -70,9 +70,12 @@
 - **Auth stubbed** (dev-permissive). No rate limiting. CORS allows only
   `localhost:3000`. MapTiler client key lives in `frontend/.env.local` (restrict
   by domain before any public deploy).
-- **No CI / Docker / deployment config.** Models are gitignored (`.keras`/`.tflite`/
-  `.npy` not in git) → a fresh clone has no models; needs Git LFS or object storage
-  for deployment. **Corollary:** the Phase 7·D publication assets (`evaluation/paper1/`
+- **Deployment config prepared; CI still absent.** Production deploy scaffolding
+  now exists (`Dockerfile`, `.dockerignore`, `heroku.yml`, `Procfile`, `app.json`,
+  env-driven `DATABASE_URL`/CORS) — see [DEPLOYMENT.md](DEPLOYMENT.md). Still
+  missing: **CI** (lint + tests), and **object storage** for the gitignored
+  `.keras`/`.tflite` models + audio so a git-based build has them (the current path
+  bakes them in via a local `heroku container:push`; durable uploads need S3). **Corollary:** the Phase 7·D publication assets (`evaluation/paper1/`
   PNG/PDF, and the `.npy` reproduction arrays) are **regenerable** from the pipeline
   (see docs/PUBLICATION_ASSETS.md), so committing them is optional; if committed,
   route binaries through Git LFS. A fresh clone must run the pipeline (needs the

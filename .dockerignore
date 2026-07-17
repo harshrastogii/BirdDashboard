@@ -1,0 +1,54 @@
+# Docker build context for the API image. Everything is included by default;
+# this excludes what the backend image does not need — and anything secret.
+# (Unlike .gitignore, Docker needs this to keep the context small: the models
+#  and seed data ARE gitignored but must enter the image, so they are NOT listed
+#  here; the venv / frontend / training audio / secrets ARE excluded.)
+
+# --- Secrets & local environment (never bake into an image) ---
+.env
+.env.*
+**/.env
+**/.env.local
+
+# --- Python virtualenv & caches ---
+birdenv/
+venv/
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# --- Version control & CI ---
+.git/
+.gitignore
+.github/
+
+# --- Frontend (deployed separately to Vercel — not part of the API image) ---
+frontend/
+
+# --- Large training audio: the API only needs the metadata CSV (re-included) ---
+training_data/*
+!training_data/dataset_metadata.csv
+sample_audio_old/
+
+# --- Preprocessed spectrogram arrays (large, not needed at runtime) ---
+spectrograms/*.npy
+
+# --- Editor / OS cruft ---
+.DS_Store
+*.swp
+.vscode/
+.idea/
+
+# --- Logs ---
+*.log
+
+# --- Docs & tests (not needed at API runtime) ---
+docs/
+tests/
+*.md
+
+# --- Docker meta ---
+Dockerfile
+.dockerignore

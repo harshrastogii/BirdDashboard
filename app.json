@@ -1,0 +1,34 @@
+{
+  "name": "Avian Observatory API",
+  "description": "FastAPI backend for the Avian Observatory acoustic bird-monitoring platform — full TensorFlow + BirdNET inference, model comparison, GIS, and biodiversity metrics.",
+  "repository": "https://github.com/harshrastogii/BirdDashboard",
+  "keywords": ["fastapi", "tensorflow", "birdnet", "bioacoustics", "postgres"],
+  "stack": "container",
+  "addons": [
+    {
+      "plan": "heroku-postgresql:essential-0",
+      "as": "DATABASE"
+    }
+  ],
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "standard-2x"
+    }
+  },
+  "env": {
+    "BIRDDASH_ENVIRONMENT": {
+      "description": "Deployment environment tag.",
+      "value": "production"
+    },
+    "BIRDDASH_AUTH_MODE": {
+      "description": "Auth mode. 'dev' is the permissive stub shipped with v1.0.0; switch to 'oidc' once a real identity provider is wired.",
+      "value": "dev"
+    },
+    "BIRDDASH_CORS_ALLOW_ORIGINS": {
+      "description": "Comma-separated list of allowed browser origins (e.g. the Vercel frontend URL). Set after the frontend URL is known.",
+      "required": false
+    }
+  },
+  "_comment": "Declarative manifest only — provisions nothing until an actual deploy. standard-2x (1 GB RAM) is RECOMMENDED for TensorFlow headroom: TF's baseline plus model loading and inference is likely to exceed a 512 MB dyno (R14/R15 memory events), though this has not been measured on Heroku — a smaller dyno may work for read-only/light use. Heroku injects DATABASE_URL from the Postgres add-on; api/settings.py reads it and normalises the scheme."
+}

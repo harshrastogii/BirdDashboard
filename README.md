@@ -203,15 +203,19 @@ dataset spans ~1,300 recordings across the 25 species (accessed Feb–Apr 2026).
 Note: per-recording longitude was not captured in the download, so spatial views
 use approximate site-level locations (labelled as such in the UI).
 
-## Deployment status
+## Deployment
 
-**v1.0.0 is a source + publication release.** The platform currently runs
-**locally** (no Docker/CI yet); production deployment (containerised API +
-managed PostgreSQL + object-stored models + a Vercel frontend) is tracked as
-follow-on infrastructure work (see [ROADMAP.md](ROADMAP.md) and
-[TECHNICAL_DEBT.md](TECHNICAL_DEBT.md)). The frontend already reads
-`NEXT_PUBLIC_API_BASE` from the environment, so it is Vercel-configurable without
-code changes once a backend is hosted.
+**Prepared, not yet deployed** (no cloud resources exist). The repository ships
+production deployment configuration — `Dockerfile`, `.dockerignore`, `heroku.yml`,
+`Procfile`, `app.json`, and env-driven `DATABASE_URL`/CORS handling — for the
+topology **Vercel (frontend) + Heroku Container Stack (FastAPI + TensorFlow +
+BirdNET) + Heroku Postgres**. The Container Stack is used because the ~2.3 GB
+TensorFlow stack exceeds Heroku's 500 MB buildpack slug limit; no functionality is
+reduced (a `standard-2x` dyno is recommended for TensorFlow headroom). Full
+runbook, cost estimate (~$55/mo), and the models-are-gitignored caveat:
+**[DEPLOYMENT.md](DEPLOYMENT.md)**. The frontend reads
+`NEXT_PUBLIC_API_BASE` from the environment, so it is Vercel-configurable with no
+code change.
 
 ---
 

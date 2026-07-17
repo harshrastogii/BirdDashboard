@@ -99,7 +99,7 @@ Config: `frontend/.env.local` holds `NEXT_PUBLIC_API_BASE` and
 | Research foundation (Phase 7·D) | ✅ Publication Asset Registry (`evaluation/asset_registry.json`, 53 assets); publication figures/tables (`evaluation/paper1/`); `verify_metric_provenance.py` 9/9 (app == artefact); registry is the single authoritative source. See [docs/PUBLICATION_ASSETS.md](docs/PUBLICATION_ASSETS.md) |
 | Stabilization (parser fix) | ✅ Fixed a name-truncation collision in `parse_birdnet_csv` (Barking Owl→"Masked Owl", Black Kite→"Whistling Kite"); model was correct (>0.99), parser mislabelled. Regenerated 17 artefacts; **NT comparison 21/23 → 23/23**. Regression tests `tests/test_detection_parsing.py` (7/7). Only 2 primaries changed; no correct→wrong regressions |
 | Auth / multi-tenancy | ⏸ Designed, dev-stubbed (permissive) |
-| Deployment | ⏳ Local only (no Docker/CI yet) |
+| Deployment | ⏳ Not deployed. Config **prepared** (Docker/heroku.yml/Procfile/app.json, env-driven DB+CORS — see [DEPLOYMENT.md](DEPLOYMENT.md)); CI still pending |
 
 ## Current priorities (set by the project owner, in order)
 
