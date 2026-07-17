@@ -1,5 +1,5 @@
 """
-NT Bird Acoustic Monitor — Audio Preprocessing Pipeline
+Avian Observatory — Audio Preprocessing Pipeline
 PRT840 IT Thesis | Charles Darwin University
 Converts raw MP3 recordings into mel spectrogram segments for CNN training.
 """
@@ -203,7 +203,7 @@ def save_dataset(X_train, X_val, X_test, y_train, y_val, y_test, label_map, spec
 
 def main():
     print("=" * 60)
-    print("  NT Bird Acoustic Monitor — Preprocessing Pipeline")
+    print("  Avian Observatory — Preprocessing Pipeline")
     print("  PRT840 IT Thesis | Charles Darwin University")
     print("=" * 60)
     print(f"\nSource: {BASE_DIR}")

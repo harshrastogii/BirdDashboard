@@ -1,5 +1,5 @@
 """
-NT Bird Acoustic Monitor — Preprocessing & Training v4 (Recording-Level Split)
+Avian Observatory — Preprocessing & Training v4 (Recording-Level Split)
 PRT840 IT Thesis | Charles Darwin University
 
 KEY FIX: Splits train/val/test by RECORDING, not by segment.
@@ -505,7 +505,7 @@ def evaluate_model(model, X_test, y_test, label_map):
 
 def main():
     print("=" * 60)
-    print("  NT Bird Acoustic Monitor — v4")
+    print("  Avian Observatory — v4")
     print("  Recording-Level Split + Augmentation")
     print("  PRT840 IT Thesis | Charles Darwin University")
     print("=" * 60)

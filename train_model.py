@@ -1,5 +1,5 @@
 """
-NT Bird Acoustic Monitor — CNN Model Training
+Avian Observatory — CNN Model Training
 PRT840 IT Thesis | Charles Darwin University
 Trains an EfficientNetB0-based classifier on mel spectrogram segments.
 """
@@ -260,7 +260,7 @@ def evaluate_model(model, X_test, y_test, label_map):
 
 def main():
     print("=" * 60)
-    print("  NT Bird Acoustic Monitor — Model Training")
+    print("  Avian Observatory — Model Training")
     print("  PRT840 IT Thesis | Charles Darwin University")
     print("=" * 60)
     

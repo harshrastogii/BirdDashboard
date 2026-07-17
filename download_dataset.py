@@ -1,5 +1,5 @@
 """
-NT Bird Acoustic Monitoring — Xeno-canto Dataset Downloader
+Avian Observatory — Xeno-canto Dataset Downloader
 PRT840 IT Thesis | Charles Darwin University
 Downloads audio recordings + metadata for 25 NT bird species from Xeno-canto.
 Uses direct download URLs (API v2 is retired, v3 requires key).
@@ -62,7 +62,7 @@ def search_xeno_canto(scientific_name, page=1):
     query = quote(scientific_name)
     url = f"https://xeno-canto.org/api/2/recordings?query={query}&page={page}"
     
-    headers = {"User-Agent": "Mozilla/5.0 (NT Bird Acoustic Monitor - CDU Research)"}
+    headers = {"User-Agent": "Mozilla/5.0 (Avian Observatory - CDU Research)"}
     
     try:
         r = requests.get(url, headers=headers, timeout=30)
@@ -81,7 +81,7 @@ def search_via_website(scientific_name):
     """Fallback: scrape recording IDs from the Xeno-canto website."""
     genus, species = scientific_name.split(" ", 1)
     url = f"https://xeno-canto.org/species/{genus}-{species}"
-    headers = {"User-Agent": "Mozilla/5.0 (NT Bird Acoustic Monitor - CDU Research)"}
+    headers = {"User-Agent": "Mozilla/5.0 (Avian Observatory - CDU Research)"}
     
     try:
         r = requests.get(url, headers=headers, timeout=30)
@@ -106,7 +106,7 @@ def search_via_website(scientific_name):
 def download_recording(xc_id, save_path):
     """Download a single recording from Xeno-canto by ID."""
     url = f"https://xeno-canto.org/{xc_id}/download"
-    headers = {"User-Agent": "Mozilla/5.0 (NT Bird Acoustic Monitor - CDU Research)"}
+    headers = {"User-Agent": "Mozilla/5.0 (Avian Observatory - CDU Research)"}
     
     try:
         r = requests.get(url, allow_redirects=True, headers=headers, timeout=60)
@@ -239,7 +239,7 @@ def process_species(common_name, scientific_name, conservation_status, habitat_g
 
 def main():
     print("=" * 60)
-    print("  NT Bird Acoustic Monitor — Dataset Downloader")
+    print("  Avian Observatory — Dataset Downloader")
     print("  PRT840 IT Thesis | Charles Darwin University")
     print("=" * 60)
     print(f"\nTarget: {TARGET_PER_SPECIES} recordings per species")

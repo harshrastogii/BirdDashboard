@@ -1,5 +1,5 @@
 """
-NT Bird Acoustic Monitor — CNN Model Training v2
+Avian Observatory — CNN Model Training v2
 PRT840 IT Thesis | Charles Darwin University
 Custom CNN designed for mel spectrogram classification.
 No transfer learning — trained from scratch on bird audio data.
@@ -225,7 +225,7 @@ def evaluate_model(model, X_test, y_test, label_map):
 
 def main():
     print("=" * 60)
-    print("  NT Bird Acoustic Monitor — Model Training v2")
+    print("  Avian Observatory — Model Training v2")
     print("  Custom CNN for Mel Spectrograms")
     print("  PRT840 IT Thesis | Charles Darwin University")
     print("=" * 60)

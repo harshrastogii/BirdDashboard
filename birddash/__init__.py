@@ -1,5 +1,5 @@
 """
-birddash — framework-agnostic core for the NT Bird Acoustic Monitoring platform.
+birddash — framework-agnostic core for the Avian Observatory platform.
 
 This package owns all machine-learning, inference, audio-processing, and
 domain logic. It has NO dependency on Streamlit (or any UI framework), so the

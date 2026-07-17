@@ -1,5 +1,5 @@
 """
-NT Bird Acoustic Monitor — Generate Evaluation Charts
+Avian Observatory — Generate Evaluation Charts
 Comparison across v2, v3, v4 model versions
 PRT840 IT Thesis | Charles Darwin University
 """
@@ -343,7 +343,7 @@ def chart_nt_vs_birdnet():
 def main():
     print("=" * 60)
     print("  Generating Evaluation Charts")
-    print("  NT Bird Acoustic Monitor | PRT840 IT Thesis")
+    print("  Avian Observatory | PRT840 IT Thesis")
     print("=" * 60)
     
     chart_overall_accuracy()

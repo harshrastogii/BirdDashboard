@@ -1,5 +1,5 @@
 """
-Centralised configuration for the NT Bird Acoustic Monitoring platform.
+Centralised configuration for the Avian Observatory platform.
 
 Single source of truth for all filesystem paths, model locations, and shared
 pipeline constants. BASE_DIR is derived from this file's location (the repo

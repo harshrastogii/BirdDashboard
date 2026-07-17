@@ -16,13 +16,13 @@ from multi_species_section import render_multi_species_section
 
 # Page config
 st.set_page_config(
-    page_title="NT Bird Acoustic Monitor",
+    page_title="Avian Observatory",
     page_icon="logo.png",
     layout="wide"
 )
 
 st.image("logo.svg", width=120)
-st.title("NT Bird Acoustic Monitoring Dashboard")
+st.title("Avian Observatory Dashboard")
 st.caption("Interactive Visual Analytics System for AI-Powered Biodiversity Acoustic Monitoring | PRT840 IT Thesis | Charles Darwin University")
 
 # ========== INFO PANEL: About this Dashboard ==========

@@ -1,5 +1,5 @@
 """
-NT Bird Acoustic Monitor — v5: BirdNET Embeddings + Custom Classifier
+Avian Observatory — v5: BirdNET Embeddings + Custom Classifier
 PRT840 IT Thesis | Charles Darwin University
 
 APPROACH: Instead of training a CNN from scratch on raw spectrograms,
@@ -224,7 +224,7 @@ def test_classifier():
 
 def main():
     print("=" * 60)
-    print("  NT Bird Acoustic Monitor — v5")
+    print("  Avian Observatory — v5")
     print("  BirdNET Embeddings + Custom Classifier")
     print("  PRT840 IT Thesis | Charles Darwin University")
     print("=" * 60)

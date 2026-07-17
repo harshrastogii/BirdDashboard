@@ -1,4 +1,4 @@
-# NT Bird Acoustic Monitoring platform — Python dependencies
+# Avian Observatory platform — Python dependencies
 # Tested on Python 3.13. Versions are pinned to the exact set the project is
 # developed and validated against, for reproducible environments across
 # machines and the upcoming FastAPI backend / containerised deployments.

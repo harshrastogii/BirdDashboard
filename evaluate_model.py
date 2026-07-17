@@ -1,5 +1,5 @@
 """
-NT Bird Acoustic Monitor — Model Evaluation & Visualisation
+Avian Observatory — Model Evaluation & Visualisation
 PRT840 IT Thesis | Charles Darwin University
 Generates confusion matrix, per-species comparison charts,
 and NT model vs BirdNET comparison report.
@@ -409,7 +409,7 @@ def generate_classification_report(y_true, y_pred, species_names):
 
 def main():
     print("=" * 60)
-    print("  NT Bird Acoustic Monitor — Model Evaluation")
+    print("  Avian Observatory — Model Evaluation")
     print("  PRT840 IT Thesis | Charles Darwin University")
     print("=" * 60)
 

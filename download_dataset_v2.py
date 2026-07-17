@@ -1,5 +1,5 @@
 """
-NT Bird Acoustic Monitoring — Xeno-canto Dataset Downloader (v2)
+Avian Observatory — Xeno-canto Dataset Downloader (v2)
 PRT840 IT Thesis | Charles Darwin University
 Uses Xeno-canto API v3 with tag-based queries.
 Downloads audio recordings + full metadata for 25 NT bird species.
@@ -207,7 +207,7 @@ def build_metadata_row(rec, common_name, scientific, status, group, fname, folde
 
 def main():
     print("=" * 60)
-    print("  NT Bird Acoustic Monitor — Dataset Downloader v2")
+    print("  Avian Observatory — Dataset Downloader v2")
     print("  PRT840 IT Thesis | Charles Darwin University")
     print("  Using Xeno-canto API v3")
     print("=" * 60)

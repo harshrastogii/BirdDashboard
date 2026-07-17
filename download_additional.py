@@ -1,5 +1,5 @@
 """
-NT Bird Acoustic Monitor — Download Additional Recordings
+Avian Observatory — Download Additional Recordings
 PRT840 IT Thesis | Charles Darwin University
 
 Downloads additional recordings for weak species from Xeno-canto API v3.
@@ -162,7 +162,7 @@ def download_additional(species_info):
 
 def main():
     print("=" * 60)
-    print("  NT Bird Acoustic Monitor — Download Additional Recordings")
+    print("  Avian Observatory — Download Additional Recordings")
     print("  PRT840 IT Thesis | Charles Darwin University")
     print("=" * 60)
 

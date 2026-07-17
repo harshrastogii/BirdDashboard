@@ -1,5 +1,5 @@
 """
-NT Bird Acoustic Monitor — CNN Model Training v3 (Augmented)
+Avian Observatory — CNN Model Training v3 (Augmented)
 PRT840 IT Thesis | Charles Darwin University
 
 Addresses the generalisation gap identified in v2:
@@ -387,7 +387,7 @@ def preview_augmentations(X_train, y_train, label_map):
 
 def main():
     print("=" * 60)
-    print("  NT Bird Acoustic Monitor — Model Training v3")
+    print("  Avian Observatory — Model Training v3")
     print("  CNN with Spectrogram Augmentation")
     print("  PRT840 IT Thesis | Charles Darwin University")
     print("=" * 60)
