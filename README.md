@@ -1,387 +1,232 @@
-# NT Bird Acoustic Monitor
+# Avian Observatory
 
-**Interactive Visual Analytics System for AI-Powered Biodiversity Acoustic Monitoring**
+![release](https://img.shields.io/badge/release-v1.0.0-2e7d63)
+![python](https://img.shields.io/badge/python-3.13-3776AB)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688)
+![Next.js](https://img.shields.io/badge/Next.js-16-000000)
+![tests](https://img.shields.io/badge/tests-21%20passing-2e7d63)
+![license](https://img.shields.io/badge/license-academic%20research-lightgrey)
 
-*PRT840 Final Thesis Project · Master of Data Science (SDASC3) · Charles Darwin University · Supervisor: Dr. Md Rafiqul Islam*
+**An environmental-intelligence platform for AI-powered acoustic bird monitoring in the Northern Territory, Australia.**
 
-An AI-powered bioacoustic monitoring system for Northern Territory bird species.
-Combines region-specific deep learning classifiers with multi-species sound event
-detection and an interactive dashboard designed for field ecologists, conservation
-managers, and policy makers.
+*Originating from PRT840 IT Thesis · Master of Data Science · Charles Darwin University · Supervisor: Dr. Md Rafiqul Islam.*
+
+Avian Observatory identifies Northern Territory bird species from audio using
+**region-specific AI**, then fuses those detections with spatial and biodiversity
+context — moving beyond *"what species is this?"* toward *"where, when, and what
+does it mean for conservation?"* It began as a single-file Streamlit thesis
+dashboard and was migrated, phase by phase, into a layered platform with a
+framework-free scientific core, a FastAPI service, and a Next.js web app.
 
 ---
 
 ## Why this project exists
 
-BirdNET (Kahl et al., 2021) is the current gold-standard tool for AI-based
-bioacoustic monitoring globally. Its training data skews heavily toward Northern
-Hemisphere species. On Northern Territory birds, BirdNET v2.4 routinely
-misidentifies local species as European or North American birds — a Laughing
-Kookaburra gets classified as a European Wren; a Willie Wagtail as a North
-American owl — often with 99% confidence.
-
-This project builds NT-specific classifiers that materially outperform BirdNET
-on Northern Territory species, and integrates them into an interactive
-dashboard for real-world biodiversity monitoring use cases.
+BirdNET (Kahl et al., 2021) is the global gold standard for acoustic bird ID, but
+its training skews to the Northern Hemisphere. On Northern Territory species it
+routinely **misidentifies** local birds — e.g. Azure Kingfisher → "Eurasian
+Treecreeper", Diamond Dove → "New Zealand Bellbird" — often with high confidence.
+This project builds NT-specific classifiers that outperform BirdNET on NT species,
+and a platform to demonstrate, evaluate, and operationalise that finding
+**reproducibly and honestly**.
 
 ---
 
-## What's been built
+## Architecture
 
-### Models (five iterations)
+```
+Next.js web app (frontend/)                         ← dashboard · map · workspace · species · biodiversity · models
+        │  REST/JSON (Pydantic DTOs are the contract)
+FastAPI service (api/)   routers → services → repositories
+        │                          │
+PostgreSQL (metadata)     Filesystem (audio · detections · spectrograms)
+        │
+birddash (scientific core, framework-free — no Streamlit/FastAPI)
+   config · audio · nt_model · birdnet · detection · results · metrics · statistics · taxonomy
+        ▲
+        └─ also imported by the original Streamlit app (app.py) — kept runnable as the parity reference
+```
 
-| Version | Approach | Result | Purpose |
-|---------|----------|--------|---------|
-| v2 | Custom CNN (4 conv blocks, 32→64→128→256) trained on 18,462 mel spectrogram segments | 92.7% segment-level test accuracy | Baseline NT classifier |
-| v3 | v2 + five data augmentations (time/freq mask, noise, volume, shift) | 92.7% segment-level | Tested augmentation hypothesis |
-| v4 | Same architecture, recording-level train/test split | 66.6% recording-level | Exposed segment-level data leakage |
-| v5 | BirdNET v2.4 embeddings + custom 25-class head (transfer learning) | AUPRC 0.98, AUROC 0.99 | Bypasses leakage at the representational level |
-| v5.1 (SED) | v5 + sliding-window sound event detection + dual threshold | Multi-species detection with timestamps | Multi-species classification on single recordings |
-
-### Dashboard
-
-A Streamlit-based interactive dashboard (`app.py`) supporting:
-
-- Side-by-side comparison of BirdNET v2.4 vs the custom NT model
-- Per-recording confidence timelines and top-5 species predictions
-- Biodiversity metrics (Shannon diversity, Simpson diversity, species richness)
-- Multi-species sound event detection with timestamped event tables and CSV export
-- **Listen and Confirm verification interface** — click any detected event to
-  audition the exact 3-second window and mark it as confirmed, rejected, or
-  uncertain; exports as a ground-truth CSV for hand-labelling workflows
-- Audio file upload with automatic BirdNET-Analyzer integration
-
-### Validated findings
-
-- BirdNET v2.4 achieves ≈0% accuracy on NT species under our evaluation.
-- Custom CNN (v3) achieves 92.7% on segment-level splits but 66.6% on
-  recording-level splits, empirically demonstrating segment-level data leakage.
-- v5 transfer learning addresses the leakage at the representational level.
-- Multi-species sound event detection achieves 4/6 (66.7%) primary-species
-  identification across the six-recording validation set — closely mirroring
-  the v4 recording-level baseline of 66.6%.
-- The Willie Wagtail recording (139 s) returned the primary species correctly
-  plus seven secondary species at distinct timestamps with confidences between
-  0.27 and 0.94.
+`birddash` owns all science; the API is a stable resource contract; the frontend
+is a thin modern client. Full detail: **[ARCHITECTURE.md](ARCHITECTURE.md)**.
 
 ---
 
-## Environment configuration
+## Key features
 
-### System requirements
-
-- **Operating system:** macOS 12+ or Linux (tested on macOS 14, Apple Silicon)
-- **Python:** 3.10 – 3.13
-- **Disk:** ~3 GB free (training data, models, dependencies)
-- **RAM:** 8 GB minimum, 16 GB recommended for training
-- **GPU:** Not required; all training runs on CPU (Apple Silicon or Intel)
-
-### External tools
-
-- **ffmpeg** — required by librosa for audio decoding. Install via Homebrew on macOS:
-  ```bash
-  brew install ffmpeg
-  ```
-  or via apt on Linux: `sudo apt install ffmpeg`
-
-### Python dependencies
-
-All Python dependencies are listed in `requirements.txt`. Key packages:
-
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `tensorflow` | 2.x | Custom CNN training and inference (v2-v4) |
-| `keras` | 3.x | High-level model API |
-| `birdnet-analyzer` | 2.4.0 | BirdNET v2.4 inference and embedding extraction |
-| `librosa` | 0.10+ | Audio loading, resampling, mel-spectrogram generation |
-| `soundfile` | 0.12+ | Audio I/O |
-| `numpy`, `pandas` | latest | Numerical and tabular computation |
-| `matplotlib` | 3.7+ | Static visualisations and report figures |
-| `streamlit` | 1.30+ | Interactive dashboard |
-| `plotly` | 5.15+ | Interactive charts in the dashboard |
-| `scikit-learn` | 1.3+ | Evaluation metrics, classification reports |
-
-### Installation
-
-```bash
-git clone https://github.com/harshrastogii/BirdDashboard.git
-cd BirdDashboard
-python3 -m venv birdenv
-source birdenv/bin/activate            # On Windows: birdenv\Scripts\activate
-pip install --upgrade pip
-pip install -r requirements.txt
-```
+- **Region-specific detection** — the **NT Custom Classifier (v5)** (BirdNET v2.4
+  embeddings + a custom NT head) deployed via the **v5.2 multi-species
+  sound-event-detection** pipeline; per-recording species + timestamps.
+- **Honest model comparison** — NT model vs global BirdNET on identical recordings,
+  synonym-aware, with confidence intervals and a paired significance test.
+- **Interactive map** — monitoring sites with species/confidence filters (GIS-first;
+  coordinate-provider abstraction ready for precise per-recording GPS).
+- **Recording workspace** — audio, server-rendered mel spectrogram, model
+  comparison, and a **Listen & Label** annotation workflow.
+- **Biodiversity metrics** — Shannon, Simpson, species richness across the library.
+- **Reproducible evaluation + Publication Asset Registry** — every figure, table,
+  and metric traceable to a persisted artefact (for Paper 1).
+- **Scientific-integrity tooling** — documented-vs-verified-vs-reproduced metric
+  provenance, Wilson / Clopper–Pearson / McNemar / bootstrap intervals, sourced
+  synonym handling.
 
 ---
 
-## Model artefacts and data
+## Model performance & scientific integrity
 
-Trained model files and large datasets are excluded from version control
-(`.gitignore`) because of GitHub's file-size limits. To run the system, you
-must either retrain from scratch (see the reproduction pipeline below) or
-obtain the artefacts via one of the following methods:
+Three strictly-separated metric classes (never conflated — see
+[MODEL_REGISTRY.md](MODEL_REGISTRY.md)):
 
-| Artefact | Location | Size | How to obtain |
-|----------|----------|------|---------------|
-| `models/nt_bird_cnn_best.keras` | `models/` | ~15 MB | Re-train via `python3 train_model_v3.py`, or request from the project owner |
-| `models/NT_Bird_BirdNET_Classifier.tflite` | `models/` | ~5 MB | Re-train via `python3 train_birdnet_embeddings.py`, or request from the project owner |
-| `models/NT_Bird_BirdNET_Classifier_Labels.txt` | `models/` | <1 KB | Generated automatically alongside the .tflite file |
-| `spectrograms/X_train.npy`, `X_test.npy`, etc. | `spectrograms/` | ~500 MB total | Generated by `python3 preprocess.py` from raw Xeno-canto audio |
-| `training_data/<species>/*.mp3` | `training_data/` | ~2 GB | Downloaded via `python3 download_dataset_v2.py` from Xeno-canto |
-| `sample_audio/*.mp3` | `sample_audio/` | ~50 MB | Subset of training_data used for dashboard demos; populate manually from training_data after download |
+| Model | Metric | Provenance |
+|---|---|---|
+| Custom CNN v2/v3 | 92.7% accuracy (**segment-level — inflated by data leakage**) | *original evaluation (traceable)* |
+| Custom CNN v4 | **66.6%** accuracy (recording-level — the honest number) | *original evaluation (traceable)* |
+| **NT Custom Classifier v5** | AUPRC 0.98 / AUROC 0.99 | *documented — **not** independently verified* |
+| **NT Custom Classifier v5** | accuracy **0.88** [0.84–0.92], macro-F1 0.83, AUROC 0.98 | *independent reproduction (recording-level held-out)* |
 
-Examiners requiring direct access to the trained artefacts for assessment
-purposes can request them via the contact email at the bottom of this
-document.
+**Operational comparison (live, same 23 recordings, synonym-aware):**
+**NT v5.2 SED 23/23 (100%)** vs **BirdNET v2.4 18/23 (78%)**. The paired **exact
+McNemar** test gives **p ≈ 0.063 — not statistically significant** at this small
+sample (direction favours the NT model; more labelled recordings are needed to
+confirm it). Methods + citations: **[docs/METHODOLOGY.md](docs/METHODOLOGY.md)**.
+
+> **The leakage lesson (v2→v4)** — evaluating on segments that share a recording
+> with training segments inflates accuracy from an honest 66.6% to a misleading
+> 92.7%. All honest evaluation splits at the *recording* level. This is the
+> project's pivotal scientific result; the leaky 92.7% is **never** headlined.
+
+### Reproducibility
+
+All metrics are recomputed from persisted artefacts — no hand-entered numbers.
+`verify_metric_provenance.py` asserts the application and the publication assets
+share one source (currently 9/9 checks passing).
+
+```bash
+python regenerate_cnn_evaluation.py       # CNN metrics + CIs from saved arrays
+python evaluate_v5.py --from-saved         # v5 held-out metrics + CIs (no retraining)
+python persist_comparison_artifact.py      # snapshot the live NT-vs-BirdNET comparison
+python generate_publication_assets.py      # colourblind-safe figures + CSV/LaTeX tables → evaluation/paper1/
+python build_asset_registry.py             # Publication Asset Registry (evaluation/asset_registry.json)
+python verify_metric_provenance.py         # assert app == artefacts
+```
+
+See **[docs/PUBLICATION_ASSETS.md](docs/PUBLICATION_ASSETS.md)**.
 
 ---
 
-## Parameter settings
+## Quick start (local development)
 
-### Custom CNN training (v2/v3/v4)
-
-These parameters are set in `train_model_v2.py`, `train_model_v3.py`, and
-`train_model_v4.py`:
-
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `BATCH_SIZE` | 64 | Mini-batch size |
-| `EPOCHS` | 95 (v2), 120 (v3/v4) | Maximum training epochs |
-| `LEARNING_RATE` | 0.001 | Adam optimiser learning rate |
-| `EARLY_STOPPING_PATIENCE` | 12 | Epochs without validation improvement before stop |
-| `DROPOUT_RATE` | 0.25, 0.3, 0.4, 0.5 | Progressive dropout per conv block |
-| `AUGMENTATION_PROBABILITY` | 0.5 | Per-augmentation application probability (v3+) |
-| `TIME_MASK_MAX` | 20 | Maximum time-mask width in frames (v3+) |
-| `FREQ_MASK_MAX` | 15 | Maximum frequency-mask width in mel bins (v3+) |
-| `NOISE_STD` | 0.03 | Gaussian noise standard deviation (v3+) |
-| `VOLUME_RANGE` | [0.7, 1.3] | Volume scaling range (v3+) |
-| `TIME_SHIFT_MAX` | 15 | Maximum time-shift in frames (v3+) |
-
-### v5 BirdNET embeddings classifier
-
-Set in `train_birdnet_embeddings.py`:
-
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `HIDDEN_UNITS` | 128 | Hidden layer width in the custom head |
-| `DROPOUT` | 0.25 | Dropout in the custom head |
-| `MIXUP_ALPHA` | 0.4 | Mixup augmentation strength |
-| `EPOCHS` | 100 | Maximum training epochs |
-| `MINORITY_UPSAMPLE_RATIO` | 0.5 | Upsample minority classes to this fraction of majority class count |
-
-### Multi-species sound event detection (v5.1)
-
-Set in `multi_species_detector_v5_1.py` and exposed via the dashboard sliders:
-
-| Parameter | Default | Range | Description |
-|-----------|---------|-------|-------------|
-| `--primary-conf` | 0.5 | 0.3 – 0.95 | Confidence threshold for the dominant species in each window |
-| `--secondary-conf` | 0.25 | 0.1 – 0.7 | Confidence threshold for background species in each window |
-| `--sensitivity` | 1.25 | 0.75 – 1.5 | BirdNET detector sensitivity; higher catches fainter calls |
-| `--overlap` | 2.0 | 0.0 – 2.9 | Window overlap in seconds; 2.0 = 1-second hop on 3-second windows |
-| `--top-k` | 3 | 1 – 5 | Maximum simultaneous secondary species per window |
-| `--suppress-primary` | False | flag | If set, suppresses the primary species in the visualisation for clearer background view |
-| `--no-plot` | False | flag | If set, skips matplotlib plot generation (used when the dashboard renders its own) |
-
-### Audio preprocessing
-
-Set in `preprocess.py`:
-
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `SAMPLE_RATE` | 22050 | Resample target in Hz |
-| `SEGMENT_DURATION` | 3.0 | Segment length in seconds |
-| `N_FFT` | 2048 | FFT window size |
-| `HOP_LENGTH` | 512 | STFT hop length in samples |
-| `N_MELS` | 128 | Number of mel-frequency bands |
-| `FMIN`, `FMAX` | 150, 15000 | Frequency range in Hz |
-| `RMS_SILENCE_THRESHOLD` | 0.001 | Segments below this RMS are discarded as silent |
-
----
-
-## Execution steps
-
-### Quickstart (run the dashboard with existing artefacts)
+**Prerequisites:** Python 3.13, Node 18+, PostgreSQL 16, `ffmpeg`. Model artefacts
+(`.tflite`/`.keras`) and datasets are gitignored (too large / not redistributable)
+— retrain via the scripts or obtain from the project owner.
 
 ```bash
-git clone https://github.com/harshrastogii/BirdDashboard.git
-cd BirdDashboard
-python3 -m venv birdenv
-source birdenv/bin/activate
-pip install -r requirements.txt
-# Obtain model artefacts (see Model artefacts and data above)
-# Place sample audio files in sample_audio/
-python3 -m streamlit run app.py
-# Dashboard opens at http://localhost:8501
+# 1. Python core + API
+python3 -m venv birdenv && source birdenv/bin/activate
+pip install -r requirements-api.txt        # pulls in requirements.txt (birddash core)
+
+# 2. Database
+createdb birddash_dev                       # first time (PostgreSQL 16)
+alembic upgrade head && python -m api.seed
+
+# 3. Backend API  →  http://localhost:8000/docs
+uvicorn api.main:app --port 8000
+
+# 4. Frontend  →  http://localhost:3000
+cd frontend && npm install && npm run dev
+
+# 5. (still runs) the original Streamlit thesis app / parity reference
+streamlit run app.py
 ```
 
-### Full reproduction pipeline (from scratch)
+Config: `frontend/.env.local` holds `NEXT_PUBLIC_API_BASE` (default
+`http://localhost:8000`) and `NEXT_PUBLIC_MAPTILER_KEY` (both gitignored). API
+config via `BIRDDASH_*` env vars (`api/settings.py`). Full run notes:
+**[PROJECT_STATE.md](PROJECT_STATE.md)**.
 
-```bash
-source birdenv/bin/activate
+### API (selected endpoints, under `/api/v1`)
 
-# 1. Download training audio (~90 min, ~2 GB)
-python3 download_dataset_v2.py
-
-# 2. Generate mel spectrograms (~15 min, ~500 MB)
-python3 preprocess.py
-
-# 3. Train the custom CNN (v3, with augmentation, ~16 hours on MacBook Air)
-python3 train_model_v3.py
-
-# 4. Train the v4 recording-level model (~12 hours)
-python3 train_model_v4.py
-
-# 5. Train the v5 BirdNET-embeddings classifier (~7 minutes)
-python3 train_birdnet_embeddings.py
-
-# 6. Generate evaluation charts
-python3 generate_charts.py
-
-# 7. Run the dashboard
-python3 -m streamlit run app.py
-```
-
-### Run multi-species detection from the command line
-
-Default parameters:
-```bash
-python3 multi_species_detector_v5_1.py \
-    --audio sample_audio/Willie_Wagtail_XC1001943.mp3
-```
-
-With explicit parameters:
-```bash
-python3 multi_species_detector_v5_1.py \
-    --audio <path_to_mp3> \
-    --primary-conf 0.5 \
-    --secondary-conf 0.25 \
-    --sensitivity 1.25 \
-    --overlap 2.0 \
-    --top-k 3
-```
-
-### Run batch validation
-
-```bash
-python3 batch_validate.py
-```
-
-Output is written to `detections/validation/validation_summary.json` and individual
-per-recording JSON files in `detections/`.
+`GET /recordings`, `/recordings/{id}` (+ `/audio`, `/spectrogram`, `/detections`,
+`/multi-species`), `POST /recordings/upload`, `GET /species`, `/sites`,
+`/map/sites`, `/biodiversity`, `/models/comparison`, `/models/registry`,
+`/environmental/*` (inert scaffold). Interactive docs at `/docs`.
 
 ---
 
 ## Repository structure
 
 ```
-BirdDashboard/
-├── app.py                              Streamlit dashboard entry point
-├── multi_species_detector_v5_1.py      Active multi-species SED detector (v5-based)
-├── multi_species_section.py            Streamlit UI component with Listen & Confirm
-├── batch_validate.py                   Batch validation across multiple recordings
-├── generate_charts.py                  Evaluation chart generation (v2/v3/v4/v5 comparison)
-├── evaluate_model.py                   Per-species evaluation against held-out test set
-├── preprocess.py                       Audio → mel spectrogram preprocessing
-├── train_model_v2.py                   v2 training (custom CNN, no augmentation)
-├── train_model_v3.py                   v3 training (CNN + 5 augmentations)
-├── train_model_v4.py                   v4 training (recording-level split)
-├── train_birdnet_embeddings.py         v5 training (BirdNET embeddings + custom head)
-├── download_dataset.py                 Xeno-canto bulk downloader
-├── download_dataset_v2.py              Xeno-canto downloader with pagination fix
-├── download_additional.py              Supplementary species recording fetcher
-├── requirements.txt                    Pinned Python dependencies
-├── README.md                           This file
-├── archive/
-│   └── model_iterations/               Superseded detector scripts (research history)
-├── docs/
-│   └── week7_demo/                     Curated charts for supervisor demos
-├── detections/
-│   ├── validation/                     6-recording validation set (committed)
-│   └── (per-recording outputs)         Ad-hoc experimental results (gitignored)
-├── models/                             Trained model weights (gitignored — see above)
-├── spectrograms/                       Preprocessed mel spectrograms (gitignored)
-├── training_data/                      Xeno-canto raw audio (gitignored)
-├── sample_audio/                       Demo recordings used by the dashboard (gitignored)
-└── evaluation/                         Evaluation charts and per-species results
+birddash/        scientific core (config, audio, nt_model, birdnet, detection, results, metrics, statistics, taxonomy)
+api/             FastAPI (main, settings, db, models, schemas, security, seed, repositories/, services/, routers/v1/)
+frontend/        Next.js app (app/, components/, lib/)
+alembic/         database migrations
+evaluation/      registry.json, asset_registry.json, original/cnn_*, reproduced/v5, paper1/ (figures + tables), thesis charts
+docs/            METHODOLOGY.md, PUBLICATION_ASSETS.md
+tests/           golden parity + detection-parsing + API tests
+app.py, multi_species_section.py            original Streamlit app (parity reference, still runs)
+evaluate_v5.py, regenerate_cnn_evaluation.py, generate_publication_assets.py,
+build_asset_registry.py, verify_metric_provenance.py, persist_comparison_artifact.py   reproducible pipeline
+models/          .keras/.tflite/.npy model artefacts (gitignored)
+training_data/, sample_audio/               Xeno-canto dataset + demo audio (gitignored)
 ```
+
+## Documentation
+
+| Doc | Purpose |
+|---|---|
+| [PROJECT_STATE.md](PROJECT_STATE.md) | Current status, how to run, priorities |
+| [ARCHITECTURE.md](ARCHITECTURE.md) | Full technical architecture + API contract |
+| [MODEL_REGISTRY.md](MODEL_REGISTRY.md) | Every model, rationale, metric provenance |
+| [SCIENTIFIC_METHOD.md](SCIENTIFIC_METHOD.md) | Dataset, evaluation & comparison methodology |
+| [docs/METHODOLOGY.md](docs/METHODOLOGY.md) | Statistical methods + citations (Paper 1) |
+| [docs/PUBLICATION_ASSETS.md](docs/PUBLICATION_ASSETS.md) | Publication Asset Registry |
+| [ROADMAP.md](ROADMAP.md) · [DECISIONS.md](DECISIONS.md) · [TECHNICAL_DEBT.md](TECHNICAL_DEBT.md) · [PARITY_AUDIT.md](PARITY_AUDIT.md) | Roadmap, decisions, debt, parity |
 
 ---
 
 ## Species coverage
 
-The system targets 25 Northern Territory bird species:
-
-**Raptors and kites:** Black Kite, Whistling Kite, Red Goshawk
-**Parrots and cockatoos:** Galah, Sulphur-crested Cockatoo, Red-tailed Black
-Cockatoo, Hooded Parrot
-**Kingfishers and kookaburras:** Azure Kingfisher, Blue-winged Kookaburra,
-Laughing Kookaburra
-**Owls and nightjars:** Barking Owl, Masked Owl, Tawny Frogmouth
-**Pigeons and doves:** Diamond Dove, Partridge Pigeon
-**Other:** Magpie Goose, Channel-billed Cuckoo, Pheasant Coucal, Bush
-Stone-curlew, Great Bowerbird, Helmeted Friarbird, Rainbow Bee-eater,
-Torresian Crow, Willie Wagtail, **Gouldian Finch** (threatened)
-
-Six species are classified as threatened or near-threatened under Australian
-federal legislation, including the Gouldian Finch, Partridge Pigeon, Red
-Goshawk, Bush Stone-curlew, Masked Owl, and Hooded Parrot.
-
----
+25 Northern Territory species (24 core + Red Goshawk): Azure Kingfisher, Barking
+Owl, Black Kite, Blue-winged Kookaburra, Bush Stone-curlew, Channel-billed Cuckoo,
+Diamond Dove, Galah, Gouldian Finch, Great Bowerbird, Helmeted Friarbird, Hooded
+Parrot, Laughing Kookaburra, Magpie Goose, Masked Owl, Partridge Pigeon, Pheasant
+Coucal, Rainbow Bee-eater, Red Goshawk, Red-tailed Black-Cockatoo, Sulphur-crested
+Cockatoo, Tawny Frogmouth, Torresian Crow, Whistling Kite, Willie Wagtail.
+Several are threatened/near-threatened (e.g. Gouldian Finch, Partridge Pigeon, Red
+Goshawk, Bush Stone-curlew, Masked Owl, Hooded Parrot).
 
 ## Data source
 
-All training audio is sourced from Xeno-canto (https://xeno-canto.org) under
-their sharing policy for academic and research use. Recordings are
-attributed to individual recordists in the Xeno-canto metadata, and we
-acknowledge their contributions which made this research possible.
+Training audio is sourced from **Xeno-canto** (https://xeno-canto.org) under its
+academic/research sharing policy; recordists are attributed in the metadata. The
+dataset spans ~1,300 recordings across the 25 species (accessed Feb–Apr 2026).
+Note: per-recording longitude was not captured in the download, so spatial views
+use approximate site-level locations (labelled as such in the UI).
 
-The recordings were accessed via the Xeno-canto API v3 between February and
-April 2026. The final dataset comprises 1,303 recordings yielding 18,462
-mel-spectrogram segments.
+## Deployment status
+
+**v1.0.0 is a source + publication release.** The platform currently runs
+**locally** (no Docker/CI yet); production deployment (containerised API +
+managed PostgreSQL + object-stored models + a Vercel frontend) is tracked as
+follow-on infrastructure work (see [ROADMAP.md](ROADMAP.md) and
+[TECHNICAL_DEBT.md](TECHNICAL_DEBT.md)). The frontend already reads
+`NEXT_PUBLIC_API_BASE` from the environment, so it is Vercel-configurable without
+code changes once a backend is hosted.
 
 ---
 
 ## Key references
 
-Full reference list (34 sources) appears in the Assessment 3 final report
-References section. Key foundational works:
-
-- Kahl, S., Wood, C. M., Eibl, M., & Klinck, H. (2021). BirdNET: A deep
-  learning solution for avian diversity monitoring. *Ecological Informatics*, 61.
-- Ghani, B., Denton, T., Kahl, S., & Klinck, H. (2023). Global birdsong
-  embeddings enable superior transfer learning for bioacoustic classification.
-  *Scientific Reports*, 13.
-- Roberts, D. R., et al. (2017). Cross-validation strategies for data with
-  temporal, spatial, hierarchical, or phylogenetic structure. *Ecography*, 40(8).
-- Stowell, D. (2022). Computational bioacoustics with deep learning: a review
-  and roadmap. *PeerJ*, 10.
-- Marquez-Rodriguez, J., et al. (2025). A Bird Song Detector for improving
-  bird identification through Deep Learning: a case study from Donana.
-  *arXiv preprint arXiv:2503.15576*.
-- Hendrycks, D., & Gimpel, K. (2017). A baseline for detecting misclassified
-  and out-of-distribution examples in neural networks. *ICLR*.
-
----
-
-## Project status
-
-This repository accompanies the PRT840 Assessment 3 final submission (May 2026).
-The system is research-grade and is being developed further beyond the scope
-of this assessment, with the secondary-species validation workflow (supported
-by the Listen and Confirm interface) as the next primary work item.
-
----
+- Kahl, S., et al. (2021). BirdNET: A deep learning solution for avian diversity monitoring. *Ecological Informatics*, 61.
+- Ghani, B., et al. (2023). Global birdsong embeddings enable superior transfer learning for bioacoustic classification. *Scientific Reports*, 13.
+- Roberts, D. R., et al. (2017). Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure. *Ecography*, 40(8).
+- Wilson (1927); Clopper & Pearson (1934); McNemar (1947); Efron & Tibshirani (1993) — statistical methods, cited in [docs/METHODOLOGY.md](docs/METHODOLOGY.md).
 
 ## License and contact
 
-This is an academic research project submitted in partial fulfilment of the
-Master of Data Science (SDASC3) at Charles Darwin University. Code and
-documentation are made available under Charles Darwin University's academic
-policy for student research outputs.
+Academic research project submitted in partial fulfilment of the Master of Data
+Science at Charles Darwin University; made available under CDU's academic policy
+for student research outputs.
 
-**Author:** Harsh Rastogi (S386401)
-**Team (Group 33):** Jisan (S386804), Rafel (S387949), Tahmid (S391744)
-**Supervisor:** Dr. Md Rafiqul Islam
-**Institution:** Charles Darwin University, Faculty of Science and Technology
-**Contact:** Harsh Rastogi via CDU student email
+**Author:** Harsh Rastogi · **Group 33:** Jisan, Rafel, Tahmid · **Supervisor:**
+Dr. Md Rafiqul Islam · **Institution:** Charles Darwin University.
