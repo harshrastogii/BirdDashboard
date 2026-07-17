@@ -174,6 +174,7 @@ training_data/, sample_audio/               Xeno-canto dataset + demo audio (git
 
 | Doc | Purpose |
 |---|---|
+| [REPOSITORY_GUIDE.md](REPOSITORY_GUIDE.md) | What every folder and script is for (runtime/training/evaluation/publication/archive) — start here to navigate the repo |
 | [PROJECT_STATE.md](PROJECT_STATE.md) | Current status, how to run, priorities |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Full technical architecture + API contract |
 | [MODEL_REGISTRY.md](MODEL_REGISTRY.md) | Every model, rationale, metric provenance |

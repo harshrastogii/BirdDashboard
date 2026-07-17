@@ -39,6 +39,7 @@ intelligence; TerraIQ owns environmental intelligence; they stay decoupled.
 
 | Doc | Use it for |
 |---|---|
+| **[REPOSITORY_GUIDE.md](REPOSITORY_GUIDE.md)** | Map of every folder & standalone script (runtime/training/evaluation/publication/archive), when to use each, and what's dead/deprecated. Orient here before touching unfamiliar files. |
 | **[PROJECT_STATE.md](PROJECT_STATE.md)** | Current status, how to run, priorities, immediate next tasks. **Start here.** |
 | **[ARCHITECTURE.md](ARCHITECTURE.md)** | birddash core, FastAPI, Next.js, API contract, repositories, GIS, annotation, evaluation, registry. |
 | **[MODEL_REGISTRY.md](MODEL_REGISTRY.md)** | Every model (CNN v2/v3/v4, v5, v5.2, BirdNET), rationale, documented vs verified metrics, provenance. |
